@@ -100,12 +100,27 @@ class VistaDesktop {
             return;
         }
 
+        // Map project IDs to icon filenames
+        const iconMap = {
+            'tmobile': 'folder-yellow.png',
+            'samsung': 'folder-blue.png',
+            'shibuya': 'folder-green.png',
+            'heineken': 'folder-red.png',
+            'audi': 'folder-purple.png',
+            'kfc': 'folder-orange.png',
+            'about': 'msn-person.png',
+            'contact': 'ie.png',
+            'music': 'winamp.png'
+        };
+
+        const iconFile = iconMap[projectId] || `${projectId}.png`;
+
         const item = document.createElement('div');
         item.className = 'dock-item active';
         item.dataset.projectId = projectId;
         item.innerHTML = `
             <div class="dock-icon">
-                <img src="icons/${projectId}.svg" alt="${title}">
+                <img src="icons/${iconFile}" alt="${title}">
             </div>
             <span class="dock-tooltip">${title}</span>
         `;
