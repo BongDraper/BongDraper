@@ -100,27 +100,27 @@ class VistaDesktop {
             return;
         }
 
-        // Map project IDs to icon filenames
+        // Map project IDs to classic Y2K icon URLs
         const iconMap = {
-            'tmobile': 'folder-yellow.png',
-            'samsung': 'folder-blue.png',
-            'shibuya': 'folder-green.png',
-            'heineken': 'folder-red.png',
-            'audi': 'folder-purple.png',
-            'kfc': 'folder-orange.png',
-            'about': 'msn-person.png',
-            'contact': 'ie.png',
-            'music': 'winamp.png'
+            'tmobile': 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png',
+            'samsung': 'https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png',
+            'shibuya': 'https://win98icons.alexmeub.com/icons/png/world-2.png',
+            'heineken': 'https://win98icons.alexmeub.com/icons/png/recycle_bin_full-4.png',
+            'audi': 'https://win98icons.alexmeub.com/icons/png/computer_explorer-5.png',
+            'kfc': 'https://win98icons.alexmeub.com/icons/png/directory_favorites-2.png',
+            'about': 'https://win98icons.alexmeub.com/icons/png/msagent-4.png',
+            'contact': 'https://win98icons.alexmeub.com/icons/png/msie1-2.png',
+            'music': 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png'
         };
 
-        const iconFile = iconMap[projectId] || `${projectId}.png`;
+        const iconUrl = iconMap[projectId] || `https://win98icons.alexmeub.com/icons/png/directory_closed-4.png`;
 
         const item = document.createElement('div');
         item.className = 'dock-item active';
         item.dataset.projectId = projectId;
         item.innerHTML = `
             <div class="dock-icon">
-                <img src="icons/${iconFile}" alt="${title}">
+                <img src="${iconUrl}" alt="${title}">
             </div>
             <span class="dock-tooltip">${title}</span>
         `;
