@@ -1,126 +1,140 @@
 // Project Data for Max Gaudelli Portfolio
+// Loads from content.json for easy editing via admin panel
 
-const PROJECTS = {
-    tmobile: {
-        title: "T-Mobile Copa '24",
-        client: "T-Mobile",
-        agency: "Dentsu Creative",
-        role: "Associate Creative Director",
-        year: "2024",
-        description: `A feature spot running throughout Copa America 2024, celebrating the passion and rituals that unite soccer fans. The campaign captured authentic gameday moments—the superstitions, the lucky jerseys, the traditions passed down through generations.
+let PROJECTS = {};
+let SITE_INFO = {};
+let ABOUT_INFO = {};
 
-This was a collaboration with Samsung for the launch of the Galaxy S24 and S24+, seamlessly integrating mobile technology into the fan experience.`,
-        media: null, // Placeholder for video/image
-        credits: [
-            { role: "Associate Creative Director", name: "Max Gaudelli" },
-            { role: "Client", name: "T-Mobile" },
-            { role: "Agency", name: "Dentsu Creative" }
-        ]
-    },
-    samsung: {
-        title: "Samsung Galaxy S24",
-        client: "Samsung",
-        agency: "Dentsu Creative",
-        role: "Associate Creative Director",
-        year: "2024",
-        description: `Launch campaign for the Samsung Galaxy S24 and S24+, integrated with T-Mobile's Copa America sponsorship. The work showcased how the new Galaxy devices enhance the way fans capture and share the beautiful game.`,
-        media: null,
-        credits: [
-            { role: "Associate Creative Director", name: "Max Gaudelli" },
-            { role: "Client", name: "Samsung" },
-            { role: "Agency", name: "Dentsu Creative" }
-        ]
-    },
-    shibuya: {
-        title: "Virtual Shibuya",
-        client: "au by KDDI",
-        agency: "Ogilvy Tokyo",
-        role: "Associate Copywriter",
-        year: "2021",
-        description: `When Shibuya Ward—home to Japan's largest Halloween celebrations—asked people not to gather as a COVID preventative measure, we didn't cancel the party. We moved it online.
+// Load content from JSON
+async function loadContent() {
+    try {
+        const response = await fetch('content.json');
+        const content = await response.json();
 
-Teaming up with au by KDDI, we recreated Shibuya block by block as a virtual twin. Over 400,000 participants joined the digital Halloween celebration, generating over $20 million in media exposure.
+        SITE_INFO = content.siteInfo;
+        ABOUT_INFO = content.about;
 
-The project proved that community gatherings could transcend physical limitations, creating a new paradigm for public events.`,
-        media: null,
-        credits: [
-            { role: "Copywriter", name: "Max Gaudelli" },
-            { role: "Client", name: "au by KDDI" },
-            { role: "Agency", name: "Ogilvy Tokyo" }
-        ]
-    },
-    heineken: {
-        title: "Heineken",
-        client: "Heineken",
-        agency: "Ogilvy",
-        role: "Copywriter",
-        year: "2022-2024",
-        description: `Brand storytelling and campaign work for Heineken, crafting narratives that connect with diverse audiences across markets.`,
-        media: null,
-        credits: [
-            { role: "Copywriter", name: "Max Gaudelli" },
-            { role: "Client", name: "Heineken" },
-            { role: "Agency", name: "Ogilvy" }
-        ]
-    },
-    audi: {
-        title: "Audi",
-        client: "Audi",
-        agency: "Ogilvy",
-        role: "Copywriter",
-        year: "2022-2024",
-        description: `Automotive brand work for Audi, developing copy that captures the precision engineering and forward-thinking design philosophy of the brand.`,
-        media: null,
-        credits: [
-            { role: "Copywriter", name: "Max Gaudelli" },
-            { role: "Client", name: "Audi" },
-            { role: "Agency", name: "Ogilvy" }
-        ]
-    },
-    kfc: {
-        title: "KFC",
-        client: "KFC",
-        agency: "Ogilvy",
-        role: "Copywriter",
-        year: "2022-2024",
-        description: `Campaign work for KFC, bringing the Colonel's legacy to new audiences with fresh creative approaches while honoring the brand's heritage.`,
-        media: null,
-        credits: [
-            { role: "Copywriter", name: "Max Gaudelli" },
-            { role: "Client", name: "KFC" },
-            { role: "Agency", name: "Ogilvy" }
-        ]
-    },
-    about: {
-        title: "About Me",
-        isAbout: true,
-        name: "Max Gaudelli",
-        role: "Associate Creative Director",
-        location: "Brooklyn, NY",
-        tagline: "A haiku writer and a good friend with good music.",
-        bio: `Mexican-Argentinian creative based in the United States. Currently an Associate Creative Director at Dentsu Creative New York, working with legacy brands to connect with diverse audiences.
+        // Convert projects array to object for compatibility
+        content.projects.forEach(project => {
+            if (project.visible !== false) {
+                PROJECTS[project.id] = project;
+            }
+        });
 
-D&AD Shift '25 Mentor, helping shape the next generation of creative talent.
+        // Add special items
+        PROJECTS.about = {
+            title: "About Me",
+            isAbout: true,
+            name: SITE_INFO.name,
+            role: SITE_INFO.title,
+            location: SITE_INFO.location,
+            tagline: SITE_INFO.tagline,
+            bio: ABOUT_INFO.bio,
+            experience: ABOUT_INFO.experience
+        };
 
-My work spans General Market and Hispanic advertising, with experience across agencies in Mexico City, Buenos Aires, Tokyo, and New York.`,
-        experience: [
-            { role: "Associate Creative Director", place: "Dentsu Creative NY", year: "2024-Present" },
-            { role: "Senior Copywriter", place: "Ogilvy Miami & Mexico", year: "2022-2024" },
-            { role: "Copywriter", place: "DDB New York", year: "2022" },
-            { role: "Associate Copywriter", place: "Ogilvy Tokyo", year: "2020-2022" },
-            { role: "Associate Copywriter", place: "LaFusión Buenos Aires", year: "2018-2020" },
-            { role: "Culture Intern", place: "VICE Media Mexico", year: "2014-2016" }
-        ]
-    },
-    contact: {
-        title: "Contact",
-        isContact: true,
-        links: [
-            { label: "LinkedIn", url: "https://www.linkedin.com/in/mgaudelli/", icon: "linkedin" },
-            { label: "Email", url: "mailto:hello@maxgaudelli.com", icon: "email" }
-        ]
+        PROJECTS.contact = {
+            title: "Contact",
+            isContact: true,
+            links: [
+                { label: "LinkedIn", url: SITE_INFO.linkedin, icon: "linkedin" },
+                { label: "Email", url: `mailto:${SITE_INFO.email}`, icon: "email" }
+            ]
+        };
+
+        PROJECTS.music = {
+            title: "Music Player",
+            isMusic: true
+        };
+
+    } catch (e) {
+        console.error('Could not load content.json, using defaults', e);
+        loadDefaultContent();
     }
-};
+}
+
+// Fallback default content
+function loadDefaultContent() {
+    PROJECTS = {
+        tmobile: {
+            id: "tmobile",
+            title: "T-Mobile Copa '24",
+            client: "T-Mobile",
+            agency: "Dentsu Creative",
+            role: "Associate Creative Director",
+            year: "2024",
+            description: "A feature spot running throughout Copa America 2024.",
+            media: { type: "none" },
+            credits: []
+        },
+        about: {
+            title: "About Me",
+            isAbout: true,
+            name: "Max Gaudelli",
+            role: "Associate Creative Director",
+            location: "Brooklyn, NY",
+            tagline: "A haiku writer and a good friend with good music.",
+            bio: "Creative director based in New York.",
+            experience: []
+        },
+        contact: {
+            title: "Contact",
+            isContact: true,
+            links: [
+                { label: "LinkedIn", url: "https://linkedin.com", icon: "linkedin" },
+                { label: "Email", url: "mailto:hello@example.com", icon: "email" }
+            ]
+        },
+        music: {
+            title: "Music Player",
+            isMusic: true
+        }
+    };
+}
+
+// Helper: Parse YouTube/Vimeo URL to embed
+function getVideoEmbed(url) {
+    if (!url) return null;
+
+    // YouTube
+    const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\s?]+)/);
+    if (youtubeMatch) {
+        return `<iframe src="https://www.youtube.com/embed/${youtubeMatch[1]}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    }
+
+    // Vimeo
+    const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+    if (vimeoMatch) {
+        return `<iframe src="https://player.vimeo.com/video/${vimeoMatch[1]}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+    }
+
+    return null;
+}
+
+// Helper: Get media HTML
+function getMediaHTML(media, title) {
+    if (!media || media.type === 'none') {
+        return '<div class="project-media-placeholder">Media coming soon</div>';
+    }
+
+    if (media.type === 'youtube' && media.url) {
+        const embed = getVideoEmbed(media.url);
+        if (embed) {
+            return `<div class="project-media video-embed">${embed}</div>`;
+        }
+    }
+
+    if (media.type === 'file' && media.file) {
+        const ext = media.file.split('.').pop().toLowerCase();
+        if (['mp4', 'webm', 'mov'].includes(ext)) {
+            return `<div class="project-media"><video src="media/${media.file}" controls></video></div>`;
+        } else {
+            return `<div class="project-media"><img src="media/${media.file}" alt="${title}"></div>`;
+        }
+    }
+
+    return '<div class="project-media-placeholder">Media coming soon</div>';
+}
 
 // Window content generators
 function generateProjectContent(project) {
@@ -137,13 +151,11 @@ function generateProjectContent(project) {
                 </div>
             </div>
             <div class="project-body">
-                <div class="project-media">
-                    ${project.media ? `<img src="${project.media}" alt="${project.title}">` : 'Media coming soon'}
-                </div>
+                ${getMediaHTML(project.media, project.title)}
                 <div class="project-description">
                     ${project.description.split('\n\n').map(p => `<p style="margin-bottom: 16px;">${p}</p>`).join('')}
                 </div>
-                ${project.credits ? `
+                ${project.credits && project.credits.length > 0 ? `
                     <div class="project-credits">
                         <h3>Credits</h3>
                         ${project.credits.map(c => `<div>${c.role}: ${c.name}</div>`).join('')}
@@ -166,7 +178,7 @@ function generateAboutContent(project) {
             </div>
             <div class="about-experience">
                 <h3>Experience</h3>
-                ${project.experience.map(exp => `
+                ${(project.experience || []).map(exp => `
                     <div class="experience-item">
                         <span class="experience-role">${exp.role}</span>
                         <span class="experience-place">${exp.place} (${exp.year})</span>
@@ -194,6 +206,51 @@ function generateContactContent(project) {
     `;
 }
 
+function generateMusicContent() {
+    return `
+        <div class="music-player">
+            <div class="visualizer-container">
+                <canvas id="visualizer-canvas"></canvas>
+            </div>
+            <div class="player-controls">
+                <div class="now-playing">
+                    <span class="track-title">Ambient Visualization</span>
+                    <span class="track-artist">Energy Bliss Mode</span>
+                </div>
+                <div class="control-buttons">
+                    <button class="player-btn" id="prev-btn" title="Previous">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M3 2h2v12H3V2zm4 6l7-6v12l-7-6z"/>
+                        </svg>
+                    </button>
+                    <button class="player-btn play-btn" id="play-btn" title="Play/Pause">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" class="play-icon">
+                            <path d="M4 3l12 7-12 7V3z"/>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" class="pause-icon" style="display:none">
+                            <path d="M5 3h3v14H5V3zm7 0h3v14h-3V3z"/>
+                        </svg>
+                    </button>
+                    <button class="player-btn" id="next-btn" title="Next">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M11 2h2v12h-2V2zM2 2l7 6-7 6V2z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="color-scheme">
+                    <button class="scheme-btn" id="scheme-btn" title="Change Colors">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="8" cy="8" r="3"/>
+                        </svg>
+                        <span>Change Vibe</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function getProjectContent(projectId) {
     const project = PROJECTS[projectId];
     if (!project) return '<div class="project-content"><p>Project not found</p></div>';
@@ -202,7 +259,12 @@ function getProjectContent(projectId) {
         return generateAboutContent(project);
     } else if (project.isContact) {
         return generateContactContent(project);
+    } else if (project.isMusic) {
+        return generateMusicContent();
     } else {
         return generateProjectContent(project);
     }
 }
+
+// Initialize content loading
+loadContent();

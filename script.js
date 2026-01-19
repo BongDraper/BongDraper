@@ -96,6 +96,78 @@ class VistaDesktop {
         this.setupWindowDrag(windowObj);
         this.focusWindow(windowObj);
         this.addTaskbarItem(projectId, project.title);
+
+        // Initialize music player if this is the music window
+        if (projectId === 'music') {
+            this.initMusicPlayer(windowObj);
+        }
+    }
+
+    initMusicPlayer(windowObj) {
+        const canvas = windowObj.element.querySelector('#visualizer-canvas');
+        if (!canvas || !window.AmbientVisualizer) return;
+
+        const visualizer = new AmbientVisualizer(canvas);
+        windowObj.visualizer = visualizer;
+
+        // Start automatically
+        visualizer.start();
+
+        // Play/Pause button
+        const playBtn = windowObj.element.querySelector('#play-btn');
+        const playIcon = playBtn.querySelector('.play-icon');
+        const pauseIcon = playBtn.querySelector('.pause-icon');
+        let isPlaying = true;
+
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                visualizer.stop();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            } else {
+                visualizer.start();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Initially show pause icon since we auto-start
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+
+        // Color scheme button
+        const schemeBtn = windowObj.element.querySelector('#scheme-btn');
+        const schemeNames = ['Energy Bliss', 'Ambient Blue', 'Aurora', 'Sunset'];
+        let currentScheme = 0;
+
+        schemeBtn.addEventListener('click', () => {
+            visualizer.cycleColors();
+            currentScheme = (currentScheme + 1) % schemeNames.length;
+            windowObj.element.querySelector('.track-artist').textContent = schemeNames[currentScheme] + ' Mode';
+        });
+
+        // Prev/Next buttons cycle colors too
+        windowObj.element.querySelector('#prev-btn').addEventListener('click', () => {
+            visualizer.cycleColors();
+            visualizer.cycleColors();
+            visualizer.cycleColors(); // Go back one
+            currentScheme = (currentScheme - 1 + schemeNames.length) % schemeNames.length;
+            windowObj.element.querySelector('.track-artist').textContent = schemeNames[currentScheme] + ' Mode';
+        });
+
+        windowObj.element.querySelector('#next-btn').addEventListener('click', () => {
+            visualizer.cycleColors();
+            currentScheme = (currentScheme + 1) % schemeNames.length;
+            windowObj.element.querySelector('.track-artist').textContent = schemeNames[currentScheme] + ' Mode';
+        });
+
+        // Handle resize
+        const resizeObserver = new ResizeObserver(() => {
+            visualizer.resize();
+        });
+        resizeObserver.observe(windowObj.element.querySelector('.visualizer-container'));
+        windowObj.resizeObserver = resizeObserver;
     }
 
     addResizeHandles(windowEl) {
@@ -256,6 +328,14 @@ class VistaDesktop {
     closeWindow(projectId) {
         const windowObj = this.windows.get(projectId);
         if (!windowObj) return;
+
+        // Clean up visualizer if present
+        if (windowObj.visualizer) {
+            windowObj.visualizer.stop();
+        }
+        if (windowObj.resizeObserver) {
+            windowObj.resizeObserver.disconnect();
+        }
 
         windowObj.element.remove();
         this.windows.delete(projectId);

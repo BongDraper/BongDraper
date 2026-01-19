@@ -1,0 +1,143 @@
+{
+  "siteInfo": {
+    "name": "Max Gaudelli",
+    "title": "Associate Creative Director",
+    "tagline": "A haiku writer and a good friend with good music.",
+    "location": "Brooklyn, NY",
+    "email": "hello@maxgaudelli.com",
+    "linkedin": "https://www.linkedin.com/in/mgaudelli/"
+  },
+  "about": {
+    "bio": "Mexican-Argentinian creative based in the United States. Currently an Associate Creative Director at Dentsu Creative New York, working with legacy brands to connect with diverse audiences.\n\nD&AD Shift '25 Mentor, helping shape the next generation of creative talent.\n\nMy work spans General Market and Hispanic advertising, with experience across agencies in Mexico City, Buenos Aires, Tokyo, and New York.",
+    "experience": [
+      { "role": "Associate Creative Director", "place": "Dentsu Creative NY", "year": "2024-Present" },
+      { "role": "Senior Copywriter", "place": "Ogilvy Miami & Mexico", "year": "2022-2024" },
+      { "role": "Copywriter", "place": "DDB New York", "year": "2022" },
+      { "role": "Associate Copywriter", "place": "Ogilvy Tokyo", "year": "2020-2022" },
+      { "role": "Associate Copywriter", "place": "LaFusión Buenos Aires", "year": "2018-2020" },
+      { "role": "Culture Intern", "place": "VICE Media Mexico", "year": "2014-2016" }
+    ]
+  },
+  "projects": [
+    {
+      "id": "tmobile",
+      "title": "T-Mobile Copa '24",
+      "client": "T-Mobile",
+      "agency": "Dentsu Creative",
+      "role": "Associate Creative Director",
+      "year": "2024",
+      "description": "A feature spot running throughout Copa America 2024, celebrating the passion and rituals that unite soccer fans. The campaign captured authentic gameday moments—the superstitions, the lucky jerseys, the traditions passed down through generations.\n\nThis was a collaboration with Samsung for the launch of the Galaxy S24 and S24+, seamlessly integrating mobile technology into the fan experience.",
+      "media": {
+        "type": "none",
+        "url": "",
+        "file": ""
+      },
+      "credits": [
+        { "role": "Associate Creative Director", "name": "Max Gaudelli" },
+        { "role": "Client", "name": "T-Mobile" },
+        { "role": "Agency", "name": "Dentsu Creative" }
+      ],
+      "visible": true
+    },
+    {
+      "id": "samsung",
+      "title": "Samsung Galaxy S24",
+      "client": "Samsung",
+      "agency": "Dentsu Creative",
+      "role": "Associate Creative Director",
+      "year": "2024",
+      "description": "Launch campaign for the Samsung Galaxy S24 and S24+, integrated with T-Mobile's Copa America sponsorship. The work showcased how the new Galaxy devices enhance the way fans capture and share the beautiful game.",
+      "media": {
+        "type": "none",
+        "url": "",
+        "file": ""
+      },
+      "credits": [
+        { "role": "Associate Creative Director", "name": "Max Gaudelli" },
+        { "role": "Client", "name": "Samsung" },
+        { "role": "Agency", "name": "Dentsu Creative" }
+      ],
+      "visible": true
+    },
+    {
+      "id": "shibuya",
+      "title": "Virtual Shibuya",
+      "client": "au by KDDI",
+      "agency": "Ogilvy Tokyo",
+      "role": "Associate Copywriter",
+      "year": "2021",
+      "description": "When Shibuya Ward—home to Japan's largest Halloween celebrations—asked people not to gather as a COVID preventative measure, we didn't cancel the party. We moved it online.\n\nTeaming up with au by KDDI, we recreated Shibuya block by block as a virtual twin. Over 400,000 participants joined the digital Halloween celebration, generating over $20 million in media exposure.\n\nThe project proved that community gatherings could transcend physical limitations, creating a new paradigm for public events.",
+      "media": {
+        "type": "none",
+        "url": "",
+        "file": ""
+      },
+      "credits": [
+        { "role": "Copywriter", "name": "Max Gaudelli" },
+        { "role": "Client", "name": "au by KDDI" },
+        { "role": "Agency", "name": "Ogilvy Tokyo" }
+      ],
+      "visible": true
+    },
+    {
+      "id": "heineken",
+      "title": "Heineken",
+      "client": "Heineken",
+      "agency": "Ogilvy",
+      "role": "Copywriter",
+      "year": "2022-2024",
+      "description": "Brand storytelling and campaign work for Heineken, crafting narratives that connect with diverse audiences across markets.",
+      "media": {
+        "type": "none",
+        "url": "",
+        "file": ""
+      },
+      "credits": [
+        { "role": "Copywriter", "name": "Max Gaudelli" },
+        { "role": "Client", "name": "Heineken" },
+        { "role": "Agency", "name": "Ogilvy" }
+      ],
+      "visible": true
+    },
+    {
+      "id": "audi",
+      "title": "Audi",
+      "client": "Audi",
+      "agency": "Ogilvy",
+      "role": "Copywriter",
+      "year": "2022-2024",
+      "description": "Automotive brand work for Audi, developing copy that captures the precision engineering and forward-thinking design philosophy of the brand.",
+      "media": {
+        "type": "none",
+        "url": "",
+        "file": ""
+      },
+      "credits": [
+        { "role": "Copywriter", "name": "Max Gaudelli" },
+        { "role": "Client", "name": "Audi" },
+        { "role": "Agency", "name": "Ogilvy" }
+      ],
+      "visible": true
+    },
+    {
+      "id": "kfc",
+      "title": "KFC",
+      "client": "KFC",
+      "agency": "Ogilvy",
+      "role": "Copywriter",
+      "year": "2022-2024",
+      "description": "Campaign work for KFC, bringing the Colonel's legacy to new audiences with fresh creative approaches while honoring the brand's heritage.",
+      "media": {
+        "type": "none",
+        "url": "",
+        "file": ""
+      },
+      "credits": [
+        { "role": "Copywriter", "name": "Max Gaudelli" },
+        { "role": "Client", "name": "KFC" },
+        { "role": "Agency", "name": "Ogilvy" }
+      ],
+      "visible": true
+    }
+  ]
+}
