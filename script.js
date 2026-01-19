@@ -1,0 +1,431 @@
+// Vista Desktop Portfolio - Main Script
+
+class VistaDesktop {
+    constructor() {
+        this.windows = new Map();
+        this.activeWindow = null;
+        this.zIndex = 100;
+        this.windowOffsetX = 50;
+        this.windowOffsetY = 50;
+
+        this.init();
+    }
+
+    init() {
+        this.setupDesktopIcons();
+        this.setupStartMenu();
+        this.setupClock();
+        this.setupDesktopClick();
+    }
+
+    // Desktop Icons
+    setupDesktopIcons() {
+        const icons = document.querySelectorAll('.desktop-icon');
+        icons.forEach(icon => {
+            icon.addEventListener('dblclick', () => {
+                const projectId = icon.dataset.project;
+                this.openWindow(projectId);
+            });
+
+            icon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.selectIcon(icon);
+            });
+        });
+    }
+
+    selectIcon(icon) {
+        document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+        icon.classList.add('selected');
+    }
+
+    setupDesktopClick() {
+        document.getElementById('desktop').addEventListener('click', (e) => {
+            if (e.target.id === 'desktop' || e.target.classList.contains('desktop-icons')) {
+                document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+            }
+        });
+    }
+
+    // Window Management
+    openWindow(projectId) {
+        // If window already exists, focus it
+        if (this.windows.has(projectId)) {
+            const existingWindow = this.windows.get(projectId);
+            existingWindow.element.classList.remove('minimized');
+            this.focusWindow(existingWindow);
+            this.updateTaskbarItem(projectId, false);
+            return;
+        }
+
+        const project = PROJECTS[projectId];
+        if (!project) return;
+
+        const template = document.getElementById('window-template');
+        const windowEl = template.content.cloneNode(true).querySelector('.vista-window');
+
+        // Set window properties
+        windowEl.querySelector('.window-title').textContent = project.title;
+        windowEl.querySelector('.window-content').innerHTML = getProjectContent(projectId);
+
+        // Position window
+        const offset = this.windows.size * 30;
+        windowEl.style.left = `${this.windowOffsetX + offset}px`;
+        windowEl.style.top = `${this.windowOffsetY + offset}px`;
+        windowEl.style.width = '700px';
+        windowEl.style.height = '500px';
+        windowEl.dataset.projectId = projectId;
+
+        // Add resize handles
+        this.addResizeHandles(windowEl);
+
+        // Add to container
+        document.getElementById('windows-container').appendChild(windowEl);
+
+        // Create window object
+        const windowObj = {
+            id: projectId,
+            element: windowEl,
+            isMaximized: false,
+            isMinimized: false,
+            savedState: null
+        };
+
+        this.windows.set(projectId, windowObj);
+        this.setupWindowControls(windowObj);
+        this.setupWindowDrag(windowObj);
+        this.focusWindow(windowObj);
+        this.addTaskbarItem(projectId, project.title);
+    }
+
+    addResizeHandles(windowEl) {
+        const handles = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'];
+        handles.forEach(dir => {
+            const handle = document.createElement('div');
+            handle.className = `resize-handle ${dir}`;
+            windowEl.appendChild(handle);
+        });
+    }
+
+    setupWindowControls(windowObj) {
+        const { element, id } = windowObj;
+
+        // Close button
+        element.querySelector('.close-btn').addEventListener('click', () => {
+            this.closeWindow(id);
+        });
+
+        // Minimize button
+        element.querySelector('.minimize-btn').addEventListener('click', () => {
+            this.minimizeWindow(id);
+        });
+
+        // Maximize button
+        element.querySelector('.maximize-btn').addEventListener('click', () => {
+            this.toggleMaximize(id);
+        });
+
+        // Double-click titlebar to maximize
+        element.querySelector('.window-titlebar').addEventListener('dblclick', (e) => {
+            if (!e.target.closest('.window-controls')) {
+                this.toggleMaximize(id);
+            }
+        });
+
+        // Focus on click
+        element.addEventListener('mousedown', () => {
+            this.focusWindow(windowObj);
+        });
+
+        // Resize handles
+        this.setupResize(windowObj);
+    }
+
+    setupWindowDrag(windowObj) {
+        const { element } = windowObj;
+        const titlebar = element.querySelector('.window-titlebar');
+
+        let isDragging = false;
+        let startX, startY, startLeft, startTop;
+
+        titlebar.addEventListener('mousedown', (e) => {
+            if (e.target.closest('.window-controls')) return;
+            if (windowObj.isMaximized) return;
+
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startLeft = element.offsetLeft;
+            startTop = element.offsetTop;
+
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', onDragEnd);
+        });
+
+        const onDrag = (e) => {
+            if (!isDragging) return;
+
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            element.style.left = `${startLeft + dx}px`;
+            element.style.top = `${startTop + dy}px`;
+        };
+
+        const onDragEnd = () => {
+            isDragging = false;
+            document.removeEventListener('mousemove', onDrag);
+            document.removeEventListener('mouseup', onDragEnd);
+        };
+    }
+
+    setupResize(windowObj) {
+        const { element } = windowObj;
+        const handles = element.querySelectorAll('.resize-handle');
+
+        handles.forEach(handle => {
+            let isResizing = false;
+            let startX, startY, startWidth, startHeight, startLeft, startTop;
+            const direction = handle.className.split(' ')[1];
+
+            handle.addEventListener('mousedown', (e) => {
+                if (windowObj.isMaximized) return;
+
+                e.preventDefault();
+                isResizing = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                startWidth = element.offsetWidth;
+                startHeight = element.offsetHeight;
+                startLeft = element.offsetLeft;
+                startTop = element.offsetTop;
+
+                document.addEventListener('mousemove', onResize);
+                document.addEventListener('mouseup', onResizeEnd);
+            });
+
+            const onResize = (e) => {
+                if (!isResizing) return;
+
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+
+                if (direction.includes('e')) {
+                    element.style.width = `${Math.max(400, startWidth + dx)}px`;
+                }
+                if (direction.includes('w')) {
+                    const newWidth = Math.max(400, startWidth - dx);
+                    if (newWidth !== startWidth - dx + 400) {
+                        element.style.width = `${newWidth}px`;
+                        element.style.left = `${startLeft + (startWidth - newWidth)}px`;
+                    }
+                }
+                if (direction.includes('s')) {
+                    element.style.height = `${Math.max(300, startHeight + dy)}px`;
+                }
+                if (direction.includes('n')) {
+                    const newHeight = Math.max(300, startHeight - dy);
+                    if (newHeight !== startHeight - dy + 300) {
+                        element.style.height = `${newHeight}px`;
+                        element.style.top = `${startTop + (startHeight - newHeight)}px`;
+                    }
+                }
+            };
+
+            const onResizeEnd = () => {
+                isResizing = false;
+                document.removeEventListener('mousemove', onResize);
+                document.removeEventListener('mouseup', onResizeEnd);
+            };
+        });
+    }
+
+    focusWindow(windowObj) {
+        if (this.activeWindow === windowObj) return;
+
+        this.activeWindow = windowObj;
+        this.zIndex++;
+        windowObj.element.style.zIndex = this.zIndex;
+
+        // Update taskbar active states
+        document.querySelectorAll('.taskbar-item').forEach(item => {
+            item.classList.toggle('active', item.dataset.projectId === windowObj.id);
+        });
+    }
+
+    closeWindow(projectId) {
+        const windowObj = this.windows.get(projectId);
+        if (!windowObj) return;
+
+        windowObj.element.remove();
+        this.windows.delete(projectId);
+        this.removeTaskbarItem(projectId);
+
+        if (this.activeWindow?.id === projectId) {
+            this.activeWindow = null;
+        }
+    }
+
+    minimizeWindow(projectId) {
+        const windowObj = this.windows.get(projectId);
+        if (!windowObj) return;
+
+        windowObj.element.classList.add('minimized');
+        windowObj.isMinimized = true;
+        this.updateTaskbarItem(projectId, true);
+
+        if (this.activeWindow?.id === projectId) {
+            this.activeWindow = null;
+        }
+    }
+
+    toggleMaximize(projectId) {
+        const windowObj = this.windows.get(projectId);
+        if (!windowObj) return;
+
+        if (windowObj.isMaximized) {
+            // Restore
+            const { left, top, width, height } = windowObj.savedState;
+            windowObj.element.style.left = left;
+            windowObj.element.style.top = top;
+            windowObj.element.style.width = width;
+            windowObj.element.style.height = height;
+            windowObj.element.classList.remove('maximized');
+            windowObj.isMaximized = false;
+        } else {
+            // Maximize
+            windowObj.savedState = {
+                left: windowObj.element.style.left,
+                top: windowObj.element.style.top,
+                width: windowObj.element.style.width,
+                height: windowObj.element.style.height
+            };
+            windowObj.element.classList.add('maximized');
+            windowObj.isMaximized = true;
+        }
+    }
+
+    // Taskbar
+    addTaskbarItem(projectId, title) {
+        const container = document.getElementById('taskbar-programs');
+
+        const item = document.createElement('div');
+        item.className = 'taskbar-item active';
+        item.dataset.projectId = projectId;
+        item.innerHTML = `
+            <div class="taskbar-item-icon"></div>
+            <span class="taskbar-item-title">${title}</span>
+        `;
+
+        item.addEventListener('click', () => {
+            const windowObj = this.windows.get(projectId);
+            if (!windowObj) return;
+
+            if (windowObj.isMinimized) {
+                windowObj.element.classList.remove('minimized');
+                windowObj.isMinimized = false;
+                this.focusWindow(windowObj);
+            } else if (this.activeWindow?.id === projectId) {
+                this.minimizeWindow(projectId);
+            } else {
+                this.focusWindow(windowObj);
+            }
+        });
+
+        container.appendChild(item);
+    }
+
+    removeTaskbarItem(projectId) {
+        const item = document.querySelector(`.taskbar-item[data-project-id="${projectId}"]`);
+        if (item) item.remove();
+    }
+
+    updateTaskbarItem(projectId, isMinimized) {
+        const item = document.querySelector(`.taskbar-item[data-project-id="${projectId}"]`);
+        if (item) {
+            item.classList.toggle('active', !isMinimized);
+        }
+    }
+
+    // Start Menu
+    setupStartMenu() {
+        const startButton = document.getElementById('start-button');
+        const startMenu = document.getElementById('start-menu');
+
+        startButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            startMenu.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.start-menu') && !e.target.closest('.start-button')) {
+                startMenu.classList.remove('open');
+            }
+        });
+
+        // Start menu items
+        startMenu.querySelectorAll('[data-project]').forEach(item => {
+            item.addEventListener('click', () => {
+                const projectId = item.dataset.project;
+                this.openWindow(projectId);
+                startMenu.classList.remove('open');
+            });
+        });
+
+        // Start menu actions
+        startMenu.querySelectorAll('[data-action]').forEach(item => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+                if (action === 'linkedin') {
+                    window.open('https://www.linkedin.com/in/mgaudelli/', '_blank');
+                } else if (action === 'shutdown') {
+                    this.shutdown();
+                }
+                startMenu.classList.remove('open');
+            });
+        });
+    }
+
+    shutdown() {
+        document.body.style.transition = 'opacity 1s ease';
+        document.body.style.opacity = '0';
+        setTimeout(() => {
+            document.body.innerHTML = `
+                <div style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+                    background: #000;
+                    color: #fff;
+                    font-family: 'Segoe UI', sans-serif;
+                    font-size: 24px;
+                ">
+                    Thanks for visiting! Refresh to restart.
+                </div>
+            `;
+            document.body.style.opacity = '1';
+        }, 1000);
+    }
+
+    // Clock
+    setupClock() {
+        const updateClock = () => {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+            document.getElementById('tray-time').textContent = time;
+        };
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    }
+}
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    window.vistaDesktop = new VistaDesktop();
+});

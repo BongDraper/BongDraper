@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Gaudelli | Associate Creative Director</title>
+    <meta name="description" content="Portfolio of Max Gaudelli, Associate Creative Director at Dentsu Creative. A haiku writer and a good friend with good music.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="desktop" id="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icons" id="desktop-icons">
+            <div class="desktop-icon" data-project="tmobile">
+                <div class="icon-image">
+                    <img src="icons/tmobile.svg" alt="T-Mobile Copa '24">
+                </div>
+                <span class="icon-label">T-Mobile Copa '24</span>
+            </div>
+
+            <div class="desktop-icon" data-project="samsung">
+                <div class="icon-image">
+                    <img src="icons/samsung.svg" alt="Samsung Galaxy S24">
+                </div>
+                <span class="icon-label">Samsung Galaxy S24</span>
+            </div>
+
+            <div class="desktop-icon" data-project="shibuya">
+                <div class="icon-image">
+                    <img src="icons/shibuya.svg" alt="Virtual Shibuya">
+                </div>
+                <span class="icon-label">Virtual Shibuya</span>
+            </div>
+
+            <div class="desktop-icon" data-project="heineken">
+                <div class="icon-image">
+                    <img src="icons/heineken.svg" alt="Heineken">
+                </div>
+                <span class="icon-label">Heineken</span>
+            </div>
+
+            <div class="desktop-icon" data-project="audi">
+                <div class="icon-image">
+                    <img src="icons/audi.svg" alt="Audi">
+                </div>
+                <span class="icon-label">Audi</span>
+            </div>
+
+            <div class="desktop-icon" data-project="kfc">
+                <div class="icon-image">
+                    <img src="icons/kfc.svg" alt="KFC">
+                </div>
+                <span class="icon-label">KFC</span>
+            </div>
+
+            <div class="desktop-icon" data-project="about">
+                <div class="icon-image">
+                    <img src="icons/about.svg" alt="About Me">
+                </div>
+                <span class="icon-label">About Me</span>
+            </div>
+
+            <div class="desktop-icon" data-project="contact">
+                <div class="icon-image">
+                    <img src="icons/contact.svg" alt="Contact">
+                </div>
+                <span class="icon-label">Contact</span>
+            </div>
+        </div>
+
+        <!-- Windows Container -->
+        <div class="windows-container" id="windows-container"></div>
+
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <button class="start-button" id="start-button">
+                <div class="start-orb"></div>
+            </button>
+
+            <div class="taskbar-programs" id="taskbar-programs"></div>
+
+            <div class="system-tray">
+                <span class="tray-time" id="tray-time"></span>
+            </div>
+        </div>
+
+        <!-- Start Menu -->
+        <div class="start-menu" id="start-menu">
+            <div class="start-menu-header">
+                <div class="user-avatar"></div>
+                <span class="user-name">Max Gaudelli</span>
+            </div>
+            <div class="start-menu-content">
+                <div class="start-menu-left">
+                    <div class="start-item" data-project="about">
+                        <div class="start-item-icon about-icon"></div>
+                        <span>About Me</span>
+                    </div>
+                    <div class="start-item" data-project="contact">
+                        <div class="start-item-icon contact-icon"></div>
+                        <span>Contact</span>
+                    </div>
+                    <div class="start-separator"></div>
+                    <div class="start-item" data-action="linkedin">
+                        <div class="start-item-icon linkedin-icon"></div>
+                        <span>LinkedIn</span>
+                    </div>
+                </div>
+                <div class="start-menu-right">
+                    <div class="start-item-small" data-project="tmobile">T-Mobile Copa '24</div>
+                    <div class="start-item-small" data-project="samsung">Samsung Galaxy S24</div>
+                    <div class="start-item-small" data-project="shibuya">Virtual Shibuya</div>
+                    <div class="start-item-small" data-project="heineken">Heineken</div>
+                    <div class="start-item-small" data-project="audi">Audi</div>
+                    <div class="start-item-small" data-project="kfc">KFC</div>
+                </div>
+            </div>
+            <div class="start-menu-footer">
+                <div class="start-footer-item" data-action="shutdown">
+                    <span>Shut Down</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Window Template (hidden) -->
+    <template id="window-template">
+        <div class="vista-window">
+            <div class="window-titlebar">
+                <div class="window-icon"></div>
+                <span class="window-title"></span>
+                <div class="window-controls">
+                    <button class="window-btn minimize-btn" title="Minimize">
+                        <span></span>
+                    </button>
+                    <button class="window-btn maximize-btn" title="Maximize">
+                        <span></span>
+                    </button>
+                    <button class="window-btn close-btn" title="Close">
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+            <div class="window-content"></div>
+        </div>
+    </template>
+
+    <script src="projects.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
