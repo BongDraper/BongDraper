@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="safariOuter" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB"/>
+      <stop offset="50%" style="stop-color:#4A90D9"/>
+      <stop offset="100%" style="stop-color:#1E5799"/>
+    </linearGradient>
+    <linearGradient id="safariInner" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#E8E8E8"/>
+    </linearGradient>
+    <linearGradient id="safariNeedle" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B6B"/>
+      <stop offset="100%" style="stop-color:#C0392B"/>
+    </linearGradient>
+    <linearGradient id="safariNeedle2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#CCCCCC"/>
+    </linearGradient>
+    <filter id="safariShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <!-- Outer ring -->
+  <circle cx="32" cy="32" r="28" fill="url(#safariOuter)" filter="url(#safariShadow)"/>
+  <!-- Glossy rim -->
+  <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+  <!-- Inner face -->
+  <circle cx="32" cy="32" r="22" fill="url(#safariInner)"/>
+  <!-- Compass ticks -->
+  <g fill="#333" font-size="6" font-weight="bold" text-anchor="middle">
+    <text x="32" y="16">N</text>
+    <text x="32" y="54">S</text>
+    <text x="50" y="35">E</text>
+    <text x="14" y="35">W</text>
+  </g>
+  <!-- Minor ticks -->
+  <g stroke="#999" stroke-width="1">
+    <line x1="32" y1="12" x2="32" y2="16"/>
+    <line x1="32" y1="48" x2="32" y2="52"/>
+    <line x1="12" y1="32" x2="16" y2="32"/>
+    <line x1="48" y1="32" x2="52" y2="32"/>
+  </g>
+  <!-- Compass needle - red part pointing NE -->
+  <polygon points="32,14 38,32 32,28 26,32" fill="url(#safariNeedle)"/>
+  <!-- Compass needle - white part pointing SW -->
+  <polygon points="32,50 38,32 32,36 26,32" fill="url(#safariNeedle2)"/>
+  <!-- Center dot -->
+  <circle cx="32" cy="32" r="3" fill="#333"/>
+  <circle cx="32" cy="32" r="1.5" fill="#666"/>
+  <!-- Glossy overlay -->
+  <ellipse cx="32" cy="22" rx="16" ry="10" fill="rgba(255,255,255,0.3)"/>
+</svg>

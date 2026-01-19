@@ -1,35 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="hein-bg" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#86efac"/>
-      <stop offset="50%" style="stop-color:#22c55e"/>
-      <stop offset="100%" style="stop-color:#15803d"/>
+    <linearGradient id="heinekenGreen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50"/>
+      <stop offset="30%" style="stop-color:#2E7D32"/>
+      <stop offset="100%" style="stop-color:#1B5E20"/>
     </linearGradient>
-    <linearGradient id="hein-shine" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:rgba(255,255,255,0.7)"/>
-      <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+    <linearGradient id="heinekenGlass" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.3)"/>
+      <stop offset="50%" style="stop-color:rgba(255,255,255,0.1)"/>
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0.3)"/>
     </linearGradient>
-    <linearGradient id="star-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#fde68a"/>
-      <stop offset="100%" style="stop-color:#f59e0b"/>
-    </linearGradient>
-    <filter id="hein-glow">
-      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="heinekenShadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="2" flood-opacity="0.4"/>
     </filter>
   </defs>
-  <!-- Bottle cap shape -->
-  <circle cx="24" cy="24" r="18" fill="url(#hein-bg)" filter="url(#hein-glow)"/>
-  <!-- Cap ridges suggestion -->
-  <circle cx="24" cy="24" r="16" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3 2"/>
-  <!-- Shine -->
-  <ellipse cx="18" cy="16" rx="8" ry="6" fill="url(#hein-shine)" opacity="0.5"/>
-  <!-- Star -->
-  <polygon points="24,12 26,20 34,20 28,25 30,33 24,28 18,33 20,25 14,20 22,20" fill="url(#star-gold)"/>
-  <!-- Sparkles -->
-  <circle cx="38" cy="14" r="2" fill="white" opacity="0.9"/>
-  <circle cx="10" cy="36" r="1.5" fill="white" opacity="0.7"/>
+  <!-- Bottle shape -->
+  <path d="M24 10 L24 6 L40 6 L40 10 L38 14 L38 20 L42 28 L42 56 Q42 60 38 60 L26 60 Q22 60 22 56 L22 28 L26 20 L26 14 Z" fill="url(#heinekenGreen)" filter="url(#heinekenShadow)"/>
+  <!-- Glass reflection -->
+  <path d="M26 14 L26 20 L22 28 L22 56 Q22 58 24 59 L24 28 L28 20 L28 14 Z" fill="url(#heinekenGlass)"/>
+  <!-- Cap -->
+  <rect x="24" y="4" width="16" height="4" rx="1" fill="#B8860B"/>
+  <rect x="25" y="5" width="14" height="2" rx="0.5" fill="#DAA520"/>
+  <!-- Label -->
+  <rect x="24" y="34" width="16" height="16" rx="1" fill="white"/>
+  <rect x="25" y="35" width="14" height="14" rx="0.5" fill="#1B5E20"/>
+  <!-- Star on label -->
+  <polygon points="32,38 33.5,42 38,42.5 34.5,45 35.5,50 32,47 28.5,50 29.5,45 26,42.5 30.5,42" fill="#C62828"/>
+  <!-- Glossy highlight -->
+  <ellipse cx="30" cy="22" rx="4" ry="8" fill="rgba(255,255,255,0.2)"/>
 </svg>

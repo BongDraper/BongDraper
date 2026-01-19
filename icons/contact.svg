@@ -1,33 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="contact-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#93c5fd"/>
-      <stop offset="50%" style="stop-color:#3b82f6"/>
-      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    <linearGradient id="contactYellow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFEE58"/>
+      <stop offset="30%" style="stop-color:#FDD835"/>
+      <stop offset="100%" style="stop-color:#F9A825"/>
     </linearGradient>
-    <linearGradient id="contact-shine" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:rgba(255,255,255,0.7)"/>
-      <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+    <linearGradient id="contactPaper" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#EEEEEE"/>
     </linearGradient>
-    <filter id="contact-glow">
-      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="contactShadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="2" flood-opacity="0.4"/>
     </filter>
   </defs>
-  <!-- Envelope blob -->
-  <path d="M6 14 Q4 12 8 10 L40 10 Q44 12 42 14 L42 36 Q44 40 40 38 L8 38 Q4 40 6 36Z" fill="url(#contact-bg)" filter="url(#contact-glow)"/>
+  <!-- Envelope back -->
+  <path d="M6 18 L58 18 L58 52 L6 52 Z" fill="url(#contactYellow)" filter="url(#contactShadow)"/>
   <!-- Envelope flap -->
-  <path d="M6 14 L24 26 L42 14" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/>
-  <!-- Shine -->
-  <path d="M8 12 L20 12 L12 20Z" fill="url(#contact-shine)" opacity="0.4"/>
-  <!-- Paper peeking out -->
-  <rect x="12" y="22" width="24" height="12" rx="1" fill="white" opacity="0.3"/>
-  <!-- Sparkles -->
-  <circle cx="42" cy="8" r="2" fill="white" opacity="0.9"/>
-  <circle cx="4" cy="34" r="1.5" fill="white" opacity="0.7"/>
-  <!-- Star sticker -->
-  <polygon points="40 32 41 35 44 35 42 37 43 40 40 38 37 40 38 37 36 35 39 35" fill="#fde047"/>
+  <path d="M6 18 L32 36 L58 18" fill="#FBC02D"/>
+  <path d="M6 18 L32 36 L58 18" fill="none" stroke="#F9A825" stroke-width="1"/>
+  <!-- Paper inside -->
+  <rect x="12" y="24" width="40" height="24" fill="url(#contactPaper)"/>
+  <!-- Lines on paper -->
+  <line x1="16" y1="30" x2="48" y2="30" stroke="#BDBDBD" stroke-width="1"/>
+  <line x1="16" y1="36" x2="48" y2="36" stroke="#BDBDBD" stroke-width="1"/>
+  <line x1="16" y1="42" x2="36" y2="42" stroke="#BDBDBD" stroke-width="1"/>
+  <!-- @ symbol -->
+  <circle cx="46" cy="42" r="5" fill="none" stroke="#1976D2" stroke-width="2"/>
+  <path d="M46 39 Q49 39 49 42 Q49 45 46 45 L46 47" fill="none" stroke="#1976D2" stroke-width="2" stroke-linecap="round"/>
+  <!-- Envelope bottom fold -->
+  <path d="M6 52 L32 38 L58 52 Z" fill="#FFD54F"/>
+  <!-- Glossy highlight -->
+  <path d="M6 18 L32 36 L58 18 L58 24 L32 38 L6 24 Z" fill="rgba(255,255,255,0.3)"/>
+  <!-- Seal -->
+  <circle cx="32" cy="38" r="4" fill="#E53935"/>
+  <circle cx="32" cy="38" r="2" fill="#C62828"/>
 </svg>

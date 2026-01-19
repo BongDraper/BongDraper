@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="finderFace" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6CB4EE"/>
+      <stop offset="50%" style="stop-color:#4A90D9"/>
+      <stop offset="100%" style="stop-color:#2E5A9C"/>
+    </linearGradient>
+    <linearGradient id="finderGloss" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.8)"/>
+      <stop offset="50%" style="stop-color:rgba(255,255,255,0.2)"/>
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+    </linearGradient>
+    <filter id="finderShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <!-- Face base -->
+  <rect x="8" y="4" width="48" height="56" rx="8" fill="url(#finderFace)" filter="url(#finderShadow)"/>
+  <!-- Glossy highlight -->
+  <rect x="10" y="6" width="44" height="24" rx="6" fill="url(#finderGloss)"/>
+  <!-- Face details - eyes -->
+  <ellipse cx="24" cy="28" rx="6" ry="8" fill="white"/>
+  <ellipse cx="40" cy="28" rx="6" ry="8" fill="white"/>
+  <ellipse cx="25" cy="29" rx="3" ry="4" fill="#1a1a1a"/>
+  <ellipse cx="41" cy="29" rx="3" ry="4" fill="#1a1a1a"/>
+  <circle cx="26" cy="27" r="1.5" fill="white"/>
+  <circle cx="42" cy="27" r="1.5" fill="white"/>
+  <!-- Smile -->
+  <path d="M20 42 Q32 52 44 42" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <!-- Nose -->
+  <ellipse cx="32" cy="36" rx="3" ry="2" fill="rgba(255,255,255,0.6)"/>
+</svg>

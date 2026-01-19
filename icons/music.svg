@@ -1,38 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="music-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#fcd34d"/>
-      <stop offset="30%" style="stop-color:#f97316"/>
-      <stop offset="70%" style="stop-color:#ec4899"/>
-      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    <linearGradient id="musicCD" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8E8E8"/>
+      <stop offset="25%" style="stop-color:#C0C0C0"/>
+      <stop offset="50%" style="stop-color:#E8E8E8"/>
+      <stop offset="75%" style="stop-color:#A0A0A0"/>
+      <stop offset="100%" style="stop-color:#C0C0C0"/>
     </linearGradient>
-    <linearGradient id="music-shine" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:rgba(255,255,255,0.8)"/>
-      <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+    <linearGradient id="musicRainbow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF6B6B"/>
+      <stop offset="25%" style="stop-color:#4ECDC4"/>
+      <stop offset="50%" style="stop-color:#45B7D1"/>
+      <stop offset="75%" style="stop-color:#96E6A1"/>
+      <stop offset="100%" style="stop-color:#DDA0DD"/>
     </linearGradient>
-    <filter id="music-glow">
-      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <linearGradient id="musicNote" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#333333"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    <filter id="musicShadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="2" flood-opacity="0.4"/>
     </filter>
   </defs>
-  <!-- Liquid blob background -->
-  <path d="M6 20 Q2 12 12 8 Q24 4 36 8 Q46 12 42 20 Q46 32 36 40 Q24 46 12 40 Q2 32 6 20Z" fill="url(#music-bg)" filter="url(#music-glow)"/>
-  <!-- Inner glow -->
-  <ellipse cx="20" cy="18" rx="12" ry="8" fill="url(#music-shine)" opacity="0.5"/>
-  <!-- Music note -->
-  <path d="M20 32 L20 16 L32 14 L32 28" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <circle cx="17" cy="32" r="4" fill="white"/>
-  <circle cx="29" cy="28" r="4" fill="white"/>
-  <!-- Visualizer bars -->
-  <rect x="8" y="26" width="2" height="8" rx="1" fill="rgba(255,255,255,0.6)"/>
-  <rect x="12" y="22" width="2" height="12" rx="1" fill="rgba(255,255,255,0.5)"/>
-  <rect x="36" y="24" width="2" height="10" rx="1" fill="rgba(255,255,255,0.5)"/>
-  <rect x="40" y="28" width="2" height="6" rx="1" fill="rgba(255,255,255,0.4)"/>
-  <!-- Sparkles -->
-  <circle cx="42" cy="10" r="2" fill="white" opacity="0.9"/>
-  <circle cx="6" cy="36" r="1.5" fill="white" opacity="0.7"/>
-  <circle cx="38" cy="38" r="1" fill="white" opacity="0.6"/>
+  <!-- CD disc -->
+  <circle cx="32" cy="32" r="28" fill="url(#musicCD)" filter="url(#musicShadow)"/>
+  <!-- Rainbow reflection rings -->
+  <circle cx="32" cy="32" r="24" fill="none" stroke="url(#musicRainbow)" stroke-width="2" opacity="0.5"/>
+  <circle cx="32" cy="32" r="20" fill="none" stroke="url(#musicRainbow)" stroke-width="1" opacity="0.4"/>
+  <circle cx="32" cy="32" r="16" fill="none" stroke="url(#musicRainbow)" stroke-width="1" opacity="0.3"/>
+  <!-- Center hole -->
+  <circle cx="32" cy="32" r="6" fill="#333"/>
+  <circle cx="32" cy="32" r="4" fill="#666"/>
+  <circle cx="32" cy="32" r="2" fill="#999"/>
+  <!-- Music note overlay -->
+  <g transform="translate(20, 14)">
+    <ellipse cx="8" cy="28" rx="6" ry="4" fill="url(#musicNote)" transform="rotate(-20 8 28)"/>
+    <ellipse cx="20" cy="24" rx="6" ry="4" fill="url(#musicNote)" transform="rotate(-20 20 24)"/>
+    <rect x="12" y="6" width="3" height="22" fill="url(#musicNote)"/>
+    <rect x="24" y="2" width="3" height="22" fill="url(#musicNote)"/>
+    <path d="M12 6 Q18 2 27 2 L27 8 Q18 8 15 12" fill="url(#musicNote)"/>
+  </g>
+  <!-- Glossy highlight -->
+  <ellipse cx="24" cy="20" rx="12" ry="8" fill="rgba(255,255,255,0.3)"/>
 </svg>

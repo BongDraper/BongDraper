@@ -1,33 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="about-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#c4b5fd"/>
-      <stop offset="50%" style="stop-color:#8b5cf6"/>
-      <stop offset="100%" style="stop-color:#6d28d9"/>
+    <linearGradient id="aboutBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#64B5F6"/>
+      <stop offset="30%" style="stop-color:#2196F3"/>
+      <stop offset="100%" style="stop-color:#1565C0"/>
     </linearGradient>
-    <linearGradient id="about-shine" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:rgba(255,255,255,0.7)"/>
-      <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+    <linearGradient id="aboutSkin" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFCC80"/>
+      <stop offset="100%" style="stop-color:#FFB74D"/>
     </linearGradient>
-    <filter id="about-glow">
-      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <linearGradient id="aboutShirt" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7E57C2"/>
+      <stop offset="100%" style="stop-color:#512DA8"/>
+    </linearGradient>
+    <filter id="aboutShadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="2" flood-opacity="0.4"/>
     </filter>
   </defs>
-  <!-- Polaroid/photo shape -->
-  <rect x="8" y="6" width="32" height="36" rx="2" fill="white" filter="url(#about-glow)"/>
-  <rect x="10" y="8" width="28" height="24" rx="1" fill="url(#about-bg)"/>
-  <!-- Face silhouette -->
-  <circle cx="24" cy="18" r="6" fill="rgba(255,255,255,0.4)"/>
-  <ellipse cx="24" cy="30" rx="8" ry="4" fill="rgba(255,255,255,0.3)"/>
-  <!-- Shine on photo -->
-  <rect x="10" y="8" width="28" height="10" rx="1" fill="url(#about-shine)" opacity="0.4"/>
-  <!-- Sparkles -->
-  <circle cx="40" cy="10" r="2" fill="#c4b5fd" opacity="0.9"/>
-  <circle cx="6" cy="38" r="1.5" fill="#8b5cf6" opacity="0.7"/>
-  <!-- Heart sticker -->
-  <path d="M34 36 C34 34 36 34 37 35 C38 34 40 34 40 36 C40 38 37 40 37 40 C37 40 34 38 34 36Z" fill="#f472b6"/>
+  <!-- Card background -->
+  <rect x="6" y="6" width="52" height="52" rx="8" fill="url(#aboutBlue)" filter="url(#aboutShadow)"/>
+  <!-- Glossy top -->
+  <rect x="8" y="8" width="48" height="20" rx="6" fill="rgba(255,255,255,0.3)"/>
+  <!-- Person silhouette -->
+  <!-- Head -->
+  <circle cx="32" cy="24" r="10" fill="url(#aboutSkin)"/>
+  <!-- Hair -->
+  <path d="M22 22 Q22 14 32 14 Q42 14 42 22 Q40 18 32 18 Q24 18 22 22" fill="#5D4037"/>
+  <!-- Eyes -->
+  <ellipse cx="28" cy="24" rx="2" ry="2.5" fill="#333"/>
+  <ellipse cx="36" cy="24" rx="2" ry="2.5" fill="#333"/>
+  <circle cx="27" cy="23" r="0.8" fill="white"/>
+  <circle cx="35" cy="23" r="0.8" fill="white"/>
+  <!-- Smile -->
+  <path d="M28 29 Q32 33 36 29" fill="none" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Body/Shirt -->
+  <path d="M18 58 L18 44 Q18 36 32 36 Q46 36 46 44 L46 58" fill="url(#aboutShirt)"/>
+  <!-- Collar -->
+  <path d="M28 36 L32 42 L36 36" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Shirt highlight -->
+  <ellipse cx="26" cy="46" rx="4" ry="8" fill="rgba(255,255,255,0.15)"/>
 </svg>

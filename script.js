@@ -1,20 +1,19 @@
-// Vista Desktop Portfolio - Main Script
+// XP Bliss + Mac Dock Portfolio - Main Script
 
 class VistaDesktop {
     constructor() {
         this.windows = new Map();
         this.activeWindow = null;
         this.zIndex = 100;
-        this.windowOffsetX = 50;
-        this.windowOffsetY = 50;
+        this.windowOffsetX = 80;
+        this.windowOffsetY = 60;
 
         this.init();
     }
 
     init() {
         this.setupDesktopIcons();
-        this.setupStartMenu();
-        this.setupClock();
+        this.setupDock();
         this.setupDesktopClick();
     }
 
@@ -30,6 +29,19 @@ class VistaDesktop {
             icon.addEventListener('click', (e) => {
                 e.stopPropagation();
                 this.selectIcon(icon);
+            });
+
+            // Touch support for mobile
+            let touchTimer;
+            icon.addEventListener('touchstart', () => {
+                touchTimer = setTimeout(() => {
+                    const projectId = icon.dataset.project;
+                    this.openWindow(projectId);
+                }, 300);
+            });
+
+            icon.addEventListener('touchend', () => {
+                clearTimeout(touchTimer);
             });
         });
     }
@@ -47,14 +59,105 @@ class VistaDesktop {
         });
     }
 
+    // Dock Management
+    setupDock() {
+        const dock = document.getElementById('dock');
+        const dockContainer = document.getElementById('dock-container');
+
+        // Dock items click handler
+        dock.querySelectorAll('.dock-item[data-project]').forEach(item => {
+            item.addEventListener('click', () => {
+                const projectId = item.dataset.project;
+                this.openWindow(projectId);
+            });
+        });
+
+        // Dock actions
+        dock.querySelectorAll('.dock-item[data-action]').forEach(item => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+                if (action === 'linkedin') {
+                    window.open('https://www.linkedin.com/in/mgaudelli/', '_blank');
+                }
+            });
+        });
+
+        // Show dock when mouse near bottom
+        document.addEventListener('mousemove', (e) => {
+            const threshold = 50;
+            if (window.innerHeight - e.clientY < threshold) {
+                dockContainer.classList.add('active');
+            }
+        });
+    }
+
+    addDockItem(projectId, title) {
+        const dockWindows = document.getElementById('dock-windows');
+        const separatorEnd = document.getElementById('dock-separator-end');
+
+        // Check if already exists
+        if (dockWindows.querySelector(`[data-project-id="${projectId}"]`)) {
+            return;
+        }
+
+        const item = document.createElement('div');
+        item.className = 'dock-item active';
+        item.dataset.projectId = projectId;
+        item.innerHTML = `
+            <div class="dock-icon">
+                <img src="icons/${projectId}.svg" alt="${title}">
+            </div>
+            <span class="dock-tooltip">${title}</span>
+        `;
+
+        item.addEventListener('click', () => {
+            const windowObj = this.windows.get(projectId);
+            if (!windowObj) return;
+
+            if (windowObj.isMinimized) {
+                windowObj.element.classList.remove('minimized');
+                windowObj.isMinimized = false;
+                this.focusWindow(windowObj);
+            } else if (this.activeWindow?.id === projectId) {
+                this.minimizeWindow(projectId);
+            } else {
+                this.focusWindow(windowObj);
+            }
+        });
+
+        dockWindows.appendChild(item);
+        separatorEnd.style.display = 'block';
+    }
+
+    removeDockItem(projectId) {
+        const dockWindows = document.getElementById('dock-windows');
+        const item = dockWindows.querySelector(`[data-project-id="${projectId}"]`);
+        if (item) {
+            item.remove();
+        }
+
+        // Hide separator if no windows
+        if (dockWindows.children.length === 0) {
+            document.getElementById('dock-separator-end').style.display = 'none';
+        }
+    }
+
+    updateDockItem(projectId, isMinimized) {
+        const item = document.querySelector(`.dock-item[data-project-id="${projectId}"]`);
+        if (item) {
+            item.classList.toggle('active', !isMinimized);
+        }
+    }
+
     // Window Management
     openWindow(projectId) {
         // If window already exists, focus it
         if (this.windows.has(projectId)) {
             const existingWindow = this.windows.get(projectId);
             existingWindow.element.classList.remove('minimized');
+            existingWindow.isMinimized = false;
             this.focusWindow(existingWindow);
-            this.updateTaskbarItem(projectId, false);
+            this.updateDockItem(projectId, false);
             return;
         }
 
@@ -95,7 +198,7 @@ class VistaDesktop {
         this.setupWindowControls(windowObj);
         this.setupWindowDrag(windowObj);
         this.focusWindow(windowObj);
-        this.addTaskbarItem(projectId, project.title);
+        this.addDockItem(projectId, project.title);
 
         // Initialize music player if this is the music window
         if (projectId === 'music') {
@@ -220,18 +323,30 @@ class VistaDesktop {
         let isDragging = false;
         let startX, startY, startLeft, startTop;
 
-        titlebar.addEventListener('mousedown', (e) => {
-            if (e.target.closest('.window-controls')) return;
+        const startDrag = (clientX, clientY) => {
             if (windowObj.isMaximized) return;
 
             isDragging = true;
-            startX = e.clientX;
-            startY = e.clientY;
+            startX = clientX;
+            startY = clientY;
             startLeft = element.offsetLeft;
             startTop = element.offsetTop;
 
             document.addEventListener('mousemove', onDrag);
             document.addEventListener('mouseup', onDragEnd);
+            document.addEventListener('touchmove', onTouchDrag, { passive: false });
+            document.addEventListener('touchend', onDragEnd);
+        };
+
+        titlebar.addEventListener('mousedown', (e) => {
+            if (e.target.closest('.window-controls')) return;
+            startDrag(e.clientX, e.clientY);
+        });
+
+        titlebar.addEventListener('touchstart', (e) => {
+            if (e.target.closest('.window-controls')) return;
+            const touch = e.touches[0];
+            startDrag(touch.clientX, touch.clientY);
         });
 
         const onDrag = (e) => {
@@ -244,10 +359,24 @@ class VistaDesktop {
             element.style.top = `${startTop + dy}px`;
         };
 
+        const onTouchDrag = (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+
+            const touch = e.touches[0];
+            const dx = touch.clientX - startX;
+            const dy = touch.clientY - startY;
+
+            element.style.left = `${startLeft + dx}px`;
+            element.style.top = `${startTop + dy}px`;
+        };
+
         const onDragEnd = () => {
             isDragging = false;
             document.removeEventListener('mousemove', onDrag);
             document.removeEventListener('mouseup', onDragEnd);
+            document.removeEventListener('touchmove', onTouchDrag);
+            document.removeEventListener('touchend', onDragEnd);
         };
     }
 
@@ -313,14 +442,21 @@ class VistaDesktop {
     }
 
     focusWindow(windowObj) {
-        if (this.activeWindow === windowObj) return;
+        // Unfocus all windows
+        this.windows.forEach((w) => {
+            w.element.classList.remove('focused');
+            w.element.classList.add('unfocused');
+        });
 
+        // Focus the target window
         this.activeWindow = windowObj;
         this.zIndex++;
         windowObj.element.style.zIndex = this.zIndex;
+        windowObj.element.classList.remove('unfocused');
+        windowObj.element.classList.add('focused');
 
-        // Update taskbar active states
-        document.querySelectorAll('.taskbar-item').forEach(item => {
+        // Update dock active states
+        document.querySelectorAll('.dock-item[data-project-id]').forEach(item => {
             item.classList.toggle('active', item.dataset.projectId === windowObj.id);
         });
     }
@@ -339,7 +475,7 @@ class VistaDesktop {
 
         windowObj.element.remove();
         this.windows.delete(projectId);
-        this.removeTaskbarItem(projectId);
+        this.removeDockItem(projectId);
 
         if (this.activeWindow?.id === projectId) {
             this.activeWindow = null;
@@ -352,7 +488,7 @@ class VistaDesktop {
 
         windowObj.element.classList.add('minimized');
         windowObj.isMinimized = true;
-        this.updateTaskbarItem(projectId, true);
+        this.updateDockItem(projectId, true);
 
         if (this.activeWindow?.id === projectId) {
             this.activeWindow = null;
@@ -383,125 +519,6 @@ class VistaDesktop {
             windowObj.element.classList.add('maximized');
             windowObj.isMaximized = true;
         }
-    }
-
-    // Taskbar
-    addTaskbarItem(projectId, title) {
-        const container = document.getElementById('taskbar-programs');
-
-        const item = document.createElement('div');
-        item.className = 'taskbar-item active';
-        item.dataset.projectId = projectId;
-        item.innerHTML = `
-            <div class="taskbar-item-icon"></div>
-            <span class="taskbar-item-title">${title}</span>
-        `;
-
-        item.addEventListener('click', () => {
-            const windowObj = this.windows.get(projectId);
-            if (!windowObj) return;
-
-            if (windowObj.isMinimized) {
-                windowObj.element.classList.remove('minimized');
-                windowObj.isMinimized = false;
-                this.focusWindow(windowObj);
-            } else if (this.activeWindow?.id === projectId) {
-                this.minimizeWindow(projectId);
-            } else {
-                this.focusWindow(windowObj);
-            }
-        });
-
-        container.appendChild(item);
-    }
-
-    removeTaskbarItem(projectId) {
-        const item = document.querySelector(`.taskbar-item[data-project-id="${projectId}"]`);
-        if (item) item.remove();
-    }
-
-    updateTaskbarItem(projectId, isMinimized) {
-        const item = document.querySelector(`.taskbar-item[data-project-id="${projectId}"]`);
-        if (item) {
-            item.classList.toggle('active', !isMinimized);
-        }
-    }
-
-    // Start Menu
-    setupStartMenu() {
-        const startButton = document.getElementById('start-button');
-        const startMenu = document.getElementById('start-menu');
-
-        startButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            startMenu.classList.toggle('open');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.start-menu') && !e.target.closest('.start-button')) {
-                startMenu.classList.remove('open');
-            }
-        });
-
-        // Start menu items
-        startMenu.querySelectorAll('[data-project]').forEach(item => {
-            item.addEventListener('click', () => {
-                const projectId = item.dataset.project;
-                this.openWindow(projectId);
-                startMenu.classList.remove('open');
-            });
-        });
-
-        // Start menu actions
-        startMenu.querySelectorAll('[data-action]').forEach(item => {
-            item.addEventListener('click', () => {
-                const action = item.dataset.action;
-                if (action === 'linkedin') {
-                    window.open('https://www.linkedin.com/in/mgaudelli/', '_blank');
-                } else if (action === 'shutdown') {
-                    this.shutdown();
-                }
-                startMenu.classList.remove('open');
-            });
-        });
-    }
-
-    shutdown() {
-        document.body.style.transition = 'opacity 1s ease';
-        document.body.style.opacity = '0';
-        setTimeout(() => {
-            document.body.innerHTML = `
-                <div style="
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-                    background: #000;
-                    color: #fff;
-                    font-family: 'Segoe UI', sans-serif;
-                    font-size: 24px;
-                ">
-                    Thanks for visiting! Refresh to restart.
-                </div>
-            `;
-            document.body.style.opacity = '1';
-        }, 1000);
-    }
-
-    // Clock
-    setupClock() {
-        const updateClock = () => {
-            const now = new Date();
-            const time = now.toLocaleTimeString('en-US', {
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true
-            });
-            document.getElementById('tray-time').textContent = time;
-        };
-
-        updateClock();
-        setInterval(updateClock, 1000);
     }
 }
 

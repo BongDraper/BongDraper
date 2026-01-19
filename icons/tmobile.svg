@@ -1,29 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ff9af5"/>
-      <stop offset="50%" style="stop-color:#e91e8c"/>
-      <stop offset="100%" style="stop-color:#ff6b9d"/>
+    <linearGradient id="tmobilePink" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF69B4"/>
+      <stop offset="30%" style="stop-color:#E91E8C"/>
+      <stop offset="100%" style="stop-color:#A0006D"/>
     </linearGradient>
-    <linearGradient id="shine" x1="0%" y1="0%" x2="0%" y2="100%">
+    <linearGradient id="tmobileGloss" x1="0%" y1="0%" x2="0%" y2="50%">
       <stop offset="0%" style="stop-color:rgba(255,255,255,0.7)"/>
-      <stop offset="50%" style="stop-color:rgba(255,255,255,0.1)"/>
       <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="tmobileShadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="2" flood-opacity="0.4"/>
     </filter>
   </defs>
-  <!-- Blob shape -->
-  <path d="M8 16 Q4 24 8 32 Q12 40 24 42 Q36 40 40 32 Q44 24 40 16 Q36 6 24 6 Q12 6 8 16Z" fill="url(#bg)" filter="url(#glow)"/>
-  <path d="M10 18 Q8 24 12 28 Q16 32 24 32 Q28 28 28 22 Q28 14 24 12 Q16 10 10 18Z" fill="url(#shine)"/>
-  <!-- T icon -->
-  <text x="24" y="30" text-anchor="middle" fill="white" font-family="Arial" font-size="16" font-weight="bold" style="text-shadow: 0 2px 4px rgba(0,0,0,0.3)">T</text>
-  <!-- Sparkle -->
-  <circle cx="36" cy="12" r="2" fill="white" opacity="0.9"/>
-  <circle cx="38" cy="14" r="1" fill="white" opacity="0.6"/>
+  <!-- Phone base -->
+  <rect x="14" y="4" width="36" height="56" rx="6" fill="url(#tmobilePink)" filter="url(#tmobileShadow)"/>
+  <!-- Screen -->
+  <rect x="18" y="10" width="28" height="38" rx="2" fill="#1a1a2e"/>
+  <rect x="20" y="12" width="24" height="34" rx="1" fill="#2d2d44"/>
+  <!-- Screen content - soccer ball -->
+  <circle cx="32" cy="28" r="10" fill="white"/>
+  <path d="M32 18 L35 24 L32 28 L29 24 Z" fill="#333"/>
+  <path d="M25 25 L29 24 L32 28 L28 32 L22 30 Z" fill="#333"/>
+  <path d="M39 25 L35 24 L32 28 L36 32 L42 30 Z" fill="#333"/>
+  <path d="M28 32 L32 28 L36 32 L34 38 L30 38 Z" fill="#333"/>
+  <!-- T-Mobile T -->
+  <rect x="26" y="34" width="12" height="3" rx="1" fill="#E91E8C"/>
+  <rect x="30" y="34" width="4" height="10" rx="1" fill="#E91E8C"/>
+  <!-- Glossy overlay -->
+  <rect x="14" y="4" width="36" height="28" rx="6" fill="url(#tmobileGloss)"/>
+  <!-- Home button -->
+  <circle cx="32" cy="54" r="4" fill="#1a1a2e"/>
+  <circle cx="32" cy="54" r="2.5" fill="#333"/>
 </svg>
