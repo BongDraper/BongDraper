@@ -100,20 +100,20 @@ class VistaDesktop {
             return;
         }
 
-        // Map project IDs to Vista Aero style icon URLs
+        // Map project IDs to Mac OS X Yosemite style icon URLs (working hotlinks)
         const iconMap = {
-            'tmobile': 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Yellow-icon.png',
-            'samsung': 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Blue-icon.png',
-            'shibuya': 'https://icons.iconarchive.com/icons/iconshock/vista-general/256/internet-icon.png',
-            'heineken': 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Green-icon.png',
-            'audi': 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Purple-icon.png',
-            'kfc': 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Red-icon.png',
-            'about': 'https://icons.iconarchive.com/icons/iconshock/vista-general/256/user-icon.png',
-            'contact': 'https://icons.iconarchive.com/icons/iconshock/vista-general/256/mail-icon.png',
-            'music': 'https://icons.iconarchive.com/icons/iconshock/vista-general/256/music-icon.png'
+            'tmobile': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/folder-icon.png',
+            'samsung': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/documents-icon.png',
+            'shibuya': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/network-icon.png',
+            'heineken': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/downloads-icon.png',
+            'audi': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/applications-icon.png',
+            'kfc': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/movies-icon.png',
+            'about': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/contacts-icon.png',
+            'contact': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/mail-icon.png',
+            'music': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/itunes-icon.png'
         };
 
-        const iconUrl = iconMap[projectId] || 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Yellow-icon.png';
+        const iconUrl = iconMap[projectId] || 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/folder-icon.png';
 
         const item = document.createElement('div');
         item.className = 'dock-item active';
