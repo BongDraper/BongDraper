@@ -100,20 +100,20 @@ class VistaDesktop {
             return;
         }
 
-        // Map project IDs to classic Y2K icon URLs
+        // Map project IDs to Vista Aero style icon URLs
         const iconMap = {
-            'tmobile': 'https://win98icons.alexmeub.com/icons/png/directory_closed-4.png',
-            'samsung': 'https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png',
-            'shibuya': 'https://win98icons.alexmeub.com/icons/png/world-2.png',
-            'heineken': 'https://win98icons.alexmeub.com/icons/png/recycle_bin_full-4.png',
-            'audi': 'https://win98icons.alexmeub.com/icons/png/computer_explorer-5.png',
-            'kfc': 'https://win98icons.alexmeub.com/icons/png/directory_favorites-2.png',
-            'about': 'https://win98icons.alexmeub.com/icons/png/msagent-4.png',
-            'contact': 'https://win98icons.alexmeub.com/icons/png/msie1-2.png',
-            'music': 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-4.png'
+            'tmobile': 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Yellow-icon.png',
+            'samsung': 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Blue-icon.png',
+            'shibuya': 'https://icons.iconarchive.com/icons/iconshock/vista-general/256/internet-icon.png',
+            'heineken': 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Green-icon.png',
+            'audi': 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Purple-icon.png',
+            'kfc': 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Red-icon.png',
+            'about': 'https://icons.iconarchive.com/icons/iconshock/vista-general/256/user-icon.png',
+            'contact': 'https://icons.iconarchive.com/icons/iconshock/vista-general/256/mail-icon.png',
+            'music': 'https://icons.iconarchive.com/icons/iconshock/vista-general/256/music-icon.png'
         };
 
-        const iconUrl = iconMap[projectId] || `https://win98icons.alexmeub.com/icons/png/directory_closed-4.png`;
+        const iconUrl = iconMap[projectId] || 'https://icons.iconarchive.com/icons/hopstarter/sleek-xp-folders/256/Folder-Yellow-icon.png';
 
         const item = document.createElement('div');
         item.className = 'dock-item active';
