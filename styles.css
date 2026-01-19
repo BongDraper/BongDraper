@@ -1021,18 +1021,25 @@ body {
     }
 
     .vista-window {
-        min-width: 95vw !important;
-        min-height: 60vh !important;
-        left: 2.5vw !important;
-        top: 5vh !important;
+        min-width: unset !important;
+        min-height: unset !important;
         width: 95vw !important;
+        height: 65vh !important;
+        left: 2.5vw !important;
+        top: 10px !important;
+        max-height: calc(100vh - 100px) !important;
     }
 
     .vista-window.maximized {
         width: 100% !important;
-        height: calc(100vh - 70px) !important;
+        height: calc(100vh - 80px) !important;
         left: 0 !important;
         top: 0 !important;
+        max-height: unset !important;
+    }
+
+    .dock-container {
+        z-index: 2000;
     }
 
     .project-content,

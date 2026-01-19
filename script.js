@@ -171,12 +171,22 @@ class VistaDesktop {
         windowEl.querySelector('.window-title').textContent = project.title;
         windowEl.querySelector('.window-content').innerHTML = getProjectContent(projectId);
 
-        // Position window
+        // Position window - check for mobile
+        const isMobile = window.innerWidth <= 768;
         const offset = this.windows.size * 30;
-        windowEl.style.left = `${this.windowOffsetX + offset}px`;
-        windowEl.style.top = `${this.windowOffsetY + offset}px`;
-        windowEl.style.width = '700px';
-        windowEl.style.height = '500px';
+
+        if (isMobile) {
+            // On mobile, position at top of screen
+            windowEl.style.left = '2.5vw';
+            windowEl.style.top = '10px';
+            windowEl.style.width = '95vw';
+            windowEl.style.height = '70vh';
+        } else {
+            windowEl.style.left = `${this.windowOffsetX + offset}px`;
+            windowEl.style.top = `${this.windowOffsetY + offset}px`;
+            windowEl.style.width = '700px';
+            windowEl.style.height = '500px';
+        }
         windowEl.dataset.projectId = projectId;
 
         // Add resize handles
