@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="hein-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#86efac"/>
+      <stop offset="50%" style="stop-color:#22c55e"/>
+      <stop offset="100%" style="stop-color:#15803d"/>
+    </linearGradient>
+    <linearGradient id="hein-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.7)"/>
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+    </linearGradient>
+    <linearGradient id="star-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fde68a"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+    <filter id="hein-glow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Bottle cap shape -->
+  <circle cx="24" cy="24" r="18" fill="url(#hein-bg)" filter="url(#hein-glow)"/>
+  <!-- Cap ridges suggestion -->
+  <circle cx="24" cy="24" r="16" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3 2"/>
+  <!-- Shine -->
+  <ellipse cx="18" cy="16" rx="8" ry="6" fill="url(#hein-shine)" opacity="0.5"/>
+  <!-- Star -->
+  <polygon points="24,12 26,20 34,20 28,25 30,33 24,28 18,33 20,25 14,20 22,20" fill="url(#star-gold)"/>
+  <!-- Sparkles -->
+  <circle cx="38" cy="14" r="2" fill="white" opacity="0.9"/>
+  <circle cx="10" cy="36" r="1.5" fill="white" opacity="0.7"/>
+</svg>

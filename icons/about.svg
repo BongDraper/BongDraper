@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="about-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c4b5fd"/>
+      <stop offset="50%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#6d28d9"/>
+    </linearGradient>
+    <linearGradient id="about-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.7)"/>
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+    </linearGradient>
+    <filter id="about-glow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Polaroid/photo shape -->
+  <rect x="8" y="6" width="32" height="36" rx="2" fill="white" filter="url(#about-glow)"/>
+  <rect x="10" y="8" width="28" height="24" rx="1" fill="url(#about-bg)"/>
+  <!-- Face silhouette -->
+  <circle cx="24" cy="18" r="6" fill="rgba(255,255,255,0.4)"/>
+  <ellipse cx="24" cy="30" rx="8" ry="4" fill="rgba(255,255,255,0.3)"/>
+  <!-- Shine on photo -->
+  <rect x="10" y="8" width="28" height="10" rx="1" fill="url(#about-shine)" opacity="0.4"/>
+  <!-- Sparkles -->
+  <circle cx="40" cy="10" r="2" fill="#c4b5fd" opacity="0.9"/>
+  <circle cx="6" cy="38" r="1.5" fill="#8b5cf6" opacity="0.7"/>
+  <!-- Heart sticker -->
+  <path d="M34 36 C34 34 36 34 37 35 C38 34 40 34 40 36 C40 38 37 40 37 40 C37 40 34 38 34 36Z" fill="#f472b6"/>
+</svg>
