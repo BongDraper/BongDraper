@@ -19,24 +19,44 @@ body {
     width: 100vw;
 }
 
-/* Desktop - Classic Mac OS X Leopard Aurora Background (Static) */
+/* Desktop - XP Bliss-style green hills background */
 .desktop {
     width: 100vw;
     height: 100vh;
     position: relative;
     user-select: none;
     overflow: hidden;
-    /* Classic Leopard Aurora - static purple/blue space gradient */
-    background: linear-gradient(180deg,
-        #2b1055 0%,
-        #1a1a4a 20%,
-        #2d3a6d 40%,
-        #5c4b8a 55%,
-        #7b4397 70%,
-        #dc2430 85%,
-        #2b1055 100%
-    );
+    /* XP Bliss - blue sky with green rolling hills */
+    background:
+        /* Sky gradient */
+        linear-gradient(180deg,
+            #245EDC 0%,
+            #3A7BD5 20%,
+            #87CEEB 50%,
+            #87CEEB 50%
+        ),
+        /* Hills will be added via pseudo-element */
+        #228B22;
     background-size: 100% 100%;
+}
+
+/* Green hills overlay */
+.desktop::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+    background: linear-gradient(180deg,
+        #7CCD7C 0%,
+        #5DBB5D 20%,
+        #3AAF3A 40%,
+        #228B22 70%,
+        #1E7B1E 100%
+    );
+    border-radius: 50% 60% 0 0 / 30% 25% 0 0;
+    z-index: 0;
 }
 
 /* Mac Menu Bar */

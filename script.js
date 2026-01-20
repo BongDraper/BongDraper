@@ -100,20 +100,20 @@ class VistaDesktop {
             return;
         }
 
-        // Map project IDs to icons8 icon URLs (diverse Mac-style icons)
+        // Map project IDs to real Mac OS X Yosemite icons
         const iconMap = {
-            'tmobile': 'https://img.icons8.com/color/96/opened-folder.png',
-            'samsung': 'https://img.icons8.com/color/96/documents-folder.png',
-            'shibuya': 'https://img.icons8.com/color/96/globe--v1.png',
-            'heineken': 'https://img.icons8.com/color/96/pictures-folder.png',
-            'audi': 'https://img.icons8.com/color/96/application-window.png',
-            'kfc': 'https://img.icons8.com/color/96/movie-projector.png',
-            'about': 'https://img.icons8.com/color/96/contacts.png',
-            'contact': 'https://img.icons8.com/color/96/apple-mail.png',
-            'music': 'https://img.icons8.com/color/96/itunes.png'
+            'tmobile': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/preview-icon.png',
+            'samsung': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/textedit-icon.png',
+            'shibuya': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/maps-icon.png',
+            'heineken': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/photos-icon.png',
+            'audi': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/garageband-icon.png',
+            'kfc': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/imovie-icon.png',
+            'about': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/contacts-icon.png',
+            'contact': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/mail-icon.png',
+            'music': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/itunes-icon.png'
         };
 
-        const iconUrl = iconMap[projectId] || 'https://img.icons8.com/color/96/mac-folder.png';
+        const iconUrl = iconMap[projectId] || 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/finder-icon.png';
 
         const item = document.createElement('div');
         item.className = 'dock-item active';
