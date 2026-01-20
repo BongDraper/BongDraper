@@ -4,15 +4,33 @@
 let PROJECTS = {};
 let SITE_INFO = {};
 let ABOUT_INFO = {};
+let APPEARANCE = {};
+
+const ICON_BASE_URL = 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/';
+
+// Get icon URL from icon name or full URL
+function getIconUrl(iconName) {
+    if (!iconName) return ICON_BASE_URL + 'preview-icon.png';
+    if (iconName.startsWith('http')) return iconName;
+    return ICON_BASE_URL + iconName + '.png';
+}
 
 // Load content from JSON
 async function loadContent() {
     try {
-        const response = await fetch('content.json');
-        const content = await response.json();
+        // Check localStorage first for CMS edits
+        const saved = localStorage.getItem('portfolio-content');
+        let content;
+        if (saved) {
+            content = JSON.parse(saved);
+        } else {
+            const response = await fetch('content.json');
+            content = await response.json();
+        }
 
         SITE_INFO = content.siteInfo;
         ABOUT_INFO = content.about;
+        APPEARANCE = content.appearance || {};
 
         // Convert projects array to object for compatibility
         content.projects.forEach(project => {
@@ -266,5 +284,80 @@ function getProjectContent(projectId) {
     }
 }
 
-// Initialize content loading
-loadContent();
+// Apply background from appearance settings
+function applyBackground() {
+    const desktop = document.getElementById('desktop');
+    if (!desktop || !APPEARANCE.backgroundUrl) return;
+
+    const bgUrl = APPEARANCE.backgroundUrl;
+    if (bgUrl.startsWith('http')) {
+        desktop.style.background = `url('${bgUrl}') center center / cover no-repeat`;
+        desktop.style.backgroundColor = '#3a6ea5';
+    } else if (bgUrl === 'leopard-aurora') {
+        desktop.style.background = 'linear-gradient(180deg, #2b1055 0%, #1a1a4a 20%, #2d3a6d 40%, #5c4b8a 55%, #7b4397 70%, #dc2430 85%, #2b1055 100%)';
+    } else if (bgUrl === 'tiger') {
+        desktop.style.background = 'linear-gradient(180deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%)';
+    }
+}
+
+// Render desktop icons dynamically
+function renderDesktopIcons() {
+    const container = document.getElementById('desktop-icons');
+    if (!container) return;
+
+    let html = '';
+
+    // Add project icons from PROJECTS object (excluding special items)
+    Object.entries(PROJECTS).forEach(([id, project]) => {
+        if (project.isAbout || project.isContact || project.isMusic) return;
+        if (project.visible === false) return;
+
+        html += `
+            <div class="desktop-icon" data-project="${id}">
+                <div class="icon-image">
+                    <img src="${getIconUrl(project.icon)}" alt="${project.title}">
+                </div>
+                <span class="icon-label">${project.title}</span>
+            </div>
+        `;
+    });
+
+    // Add system icons (About, Contact, Music)
+    html += `
+        <div class="desktop-icon" data-project="about">
+            <div class="icon-image">
+                <img src="${ICON_BASE_URL}contacts-icon.png" alt="About Me">
+            </div>
+            <span class="icon-label">About Me</span>
+        </div>
+        <div class="desktop-icon" data-project="contact">
+            <div class="icon-image">
+                <img src="${ICON_BASE_URL}mail-icon.png" alt="Contact">
+            </div>
+            <span class="icon-label">Contact</span>
+        </div>
+        <div class="desktop-icon" data-project="music">
+            <div class="icon-image">
+                <img src="${ICON_BASE_URL}facetime-icon.png" alt="Music Player">
+            </div>
+            <span class="icon-label">Music Player</span>
+        </div>
+    `;
+
+    container.innerHTML = html;
+}
+
+// Initialize content loading and rendering
+loadContent().then(() => {
+    // Content is loaded, now render icons and apply background
+    // These will be called when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            applyBackground();
+            renderDesktopIcons();
+        });
+    } else {
+        applyBackground();
+        renderDesktopIcons();
+    }
+});

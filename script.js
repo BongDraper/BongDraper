@@ -567,7 +567,11 @@ function updateMenubarClock() {
 
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
-    window.vistaDesktop = new VistaDesktop();
+    // Wait a tick for projects.js to finish rendering icons
+    setTimeout(() => {
+        window.vistaDesktop = new VistaDesktop();
+    }, 100);
+
     updateMenubarClock();
     setInterval(updateMenubarClock, 1000);
 });

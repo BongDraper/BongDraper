@@ -1,4 +1,7 @@
 {
+  "appearance": {
+    "backgroundUrl": "https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png"
+  },
   "siteInfo": {
     "name": "Max Gaudelli",
     "title": "Associate Creative Director",
@@ -22,6 +25,7 @@
     {
       "id": "tmobile",
       "title": "T-Mobile Copa '24",
+      "icon": "preview-icon",
       "client": "T-Mobile",
       "agency": "Dentsu Creative",
       "role": "Associate Creative Director",
@@ -42,6 +46,7 @@
     {
       "id": "samsung",
       "title": "Samsung Galaxy S24",
+      "icon": "textedit-icon",
       "client": "Samsung",
       "agency": "Dentsu Creative",
       "role": "Associate Creative Director",
@@ -62,6 +67,7 @@
     {
       "id": "shibuya",
       "title": "Virtual Shibuya",
+      "icon": "maps-icon",
       "client": "au by KDDI",
       "agency": "Ogilvy Tokyo",
       "role": "Associate Copywriter",
@@ -82,6 +88,7 @@
     {
       "id": "heineken",
       "title": "Heineken",
+      "icon": "notes-icon",
       "client": "Heineken",
       "agency": "Ogilvy",
       "role": "Copywriter",
@@ -102,6 +109,7 @@
     {
       "id": "audi",
       "title": "Audi",
+      "icon": "reminders-icon",
       "client": "Audi",
       "agency": "Ogilvy",
       "role": "Copywriter",
@@ -122,6 +130,7 @@
     {
       "id": "kfc",
       "title": "KFC",
+      "icon": "calendar-icon",
       "client": "KFC",
       "agency": "Ogilvy",
       "role": "Copywriter",

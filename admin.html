@@ -427,6 +427,111 @@
         .toggle-visibility input {
             width: auto;
         }
+
+        /* Icon Selector */
+        .icon-selector {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .icon-preview {
+            width: 80px;
+            height: 80px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .icon-preview img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+        }
+
+        .icon-options {
+            flex: 1;
+        }
+
+        .icon-options select {
+            margin-bottom: 8px;
+        }
+
+        /* Background Preview */
+        .background-preview {
+            width: 100%;
+            aspect-ratio: 16/9;
+            max-width: 500px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .background-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .bg-presets {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .bg-preset {
+            cursor: pointer;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.15s ease;
+        }
+
+        .bg-preset:hover {
+            border-color: var(--text-muted);
+        }
+
+        .bg-preset.active {
+            border-color: var(--accent);
+        }
+
+        .bg-preset img,
+        .bg-preset .gradient-preview {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+
+        .bg-preset span {
+            display: block;
+            padding: 8px;
+            font-size: 12px;
+            text-align: center;
+            background: var(--card);
+        }
+
+        .gradient-preview.leopard {
+            background: linear-gradient(180deg, #2b1055 0%, #7b4397 50%, #dc2430 100%);
+        }
+
+        .gradient-preview.tiger {
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+        }
+
+        /* Project icon in list */
+        .project-item .icon img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
@@ -446,6 +551,7 @@
         <div class="tabs">
             <button class="tab active" data-tab="projects">Projects</button>
             <button class="tab" data-tab="about">About Me</button>
+            <button class="tab" data-tab="appearance">Appearance</button>
             <button class="tab" data-tab="settings">Site Settings</button>
         </div>
 
@@ -472,6 +578,33 @@
                                 <input type="checkbox" id="project-visible" checked>
                                 <span>Show on desktop</span>
                             </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Desktop Icon</label>
+                            <div class="icon-selector">
+                                <div class="icon-preview" id="project-icon-preview">
+                                    <img id="icon-preview-img" src="" alt="Icon preview">
+                                </div>
+                                <div class="icon-options">
+                                    <select id="project-icon-select" onchange="updateIconPreview()">
+                                        <option value="preview-icon">Preview (Photo/Magnifier)</option>
+                                        <option value="textedit-icon">TextEdit (Notepad)</option>
+                                        <option value="maps-icon">Maps</option>
+                                        <option value="notes-icon">Notes (Yellow Pad)</option>
+                                        <option value="reminders-icon">Reminders (Checklist)</option>
+                                        <option value="calendar-icon">Calendar</option>
+                                        <option value="contacts-icon">Contacts (Address Book)</option>
+                                        <option value="mail-icon">Mail (Stamp)</option>
+                                        <option value="facetime-icon">FaceTime (Camera)</option>
+                                        <option value="finder-icon">Finder</option>
+                                        <option value="safari-icon">Safari</option>
+                                        <option value="messages-icon">Messages</option>
+                                    </select>
+                                    <p class="help-text">Or use a custom icon URL:</p>
+                                    <input type="text" id="project-icon-url" placeholder="https://... (leave empty to use selection above)" onchange="updateIconPreview()">
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-row">
@@ -587,6 +720,46 @@
             </div>
         </div>
 
+        <!-- Appearance Tab -->
+        <div class="tab-content" id="appearance-tab">
+            <div class="card">
+                <div class="card-title" style="margin-bottom: 20px;">Desktop Background</div>
+
+                <div class="form-group">
+                    <label>Background Image</label>
+                    <div class="background-preview" id="background-preview">
+                        <img id="bg-preview-img" src="" alt="Background preview">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Preset Backgrounds</label>
+                    <div class="bg-presets" id="bg-presets">
+                        <div class="bg-preset" data-url="https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png" onclick="selectBgPreset(this)">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png" alt="XP Bliss">
+                            <span>XP Bliss</span>
+                        </div>
+                        <div class="bg-preset" data-url="leopard-aurora" onclick="selectBgPreset(this)">
+                            <div class="gradient-preview leopard"></div>
+                            <span>Leopard Aurora</span>
+                        </div>
+                        <div class="bg-preset" data-url="tiger" onclick="selectBgPreset(this)">
+                            <div class="gradient-preview tiger"></div>
+                            <span>Tiger Blue</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Custom Background URL</label>
+                    <input type="text" id="bg-custom-url" placeholder="https://... (paste image URL)" onchange="updateBgPreview()">
+                    <p class="help-text">Enter a direct URL to an image file</p>
+                </div>
+
+                <button class="btn btn-primary" onclick="saveAppearance()" style="margin-top: 16px;">Save Background</button>
+            </div>
+        </div>
+
         <!-- Settings Tab -->
         <div class="tab-content" id="settings-tab">
             <div class="card">
@@ -648,6 +821,14 @@
         let currentProjectIndex = -1;
         let currentMediaType = 'none';
 
+        // Icon URL base
+        const ICON_BASE = 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/';
+
+        function getIconUrl(iconName) {
+            if (iconName.startsWith('http')) return iconName;
+            return ICON_BASE + iconName + '.png';
+        }
+
         // Initialize
         async function init() {
             // Try to load from localStorage first
@@ -664,7 +845,8 @@
                     content = {
                         siteInfo: { name: '', title: '', tagline: '', location: '', email: '', linkedin: '' },
                         about: { bio: '', experience: [] },
-                        projects: []
+                        projects: [],
+                        appearance: { backgroundUrl: 'https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png' }
                     };
                 }
             }
@@ -672,6 +854,7 @@
             renderProjectList();
             renderSettings();
             renderAbout();
+            renderAppearance();
             setupTabs();
         }
 
@@ -692,7 +875,9 @@
             const list = document.getElementById('project-list');
             list.innerHTML = content.projects.map((project, index) => `
                 <div class="project-item ${index === currentProjectIndex ? 'active' : ''}" onclick="selectProject(${index})">
-                    <div class="icon">${getProjectIcon(project.client)}</div>
+                    <div class="icon">
+                        <img src="${getIconUrl(project.icon || 'preview-icon')}" alt="${project.title}">
+                    </div>
                     <div class="info">
                         <div class="title">${project.title}</div>
                         <div class="meta">${project.client} • ${project.year}</div>
@@ -702,24 +887,24 @@
             `).join('');
         }
 
-        function getProjectIcon(client) {
-            const icons = {
-                'T-Mobile': '📱',
-                'Samsung': '📱',
-                'au by KDDI': '🌐',
-                'Heineken': '🍺',
-                'Audi': '🚗',
-                'KFC': '🍗'
-            };
-            return icons[client] || '📁';
-        }
-
         function selectProject(index) {
             currentProjectIndex = index;
             const project = content.projects[index];
 
             document.getElementById('project-editor-card').style.display = 'block';
             document.getElementById('no-project-selected').style.display = 'none';
+
+            // Icon
+            const iconSelect = document.getElementById('project-icon-select');
+            const iconUrl = document.getElementById('project-icon-url');
+            if (project.icon && project.icon.startsWith('http')) {
+                iconUrl.value = project.icon;
+                iconSelect.value = 'preview-icon';
+            } else {
+                iconSelect.value = project.icon || 'preview-icon';
+                iconUrl.value = '';
+            }
+            updateIconPreview();
 
             document.getElementById('project-title').value = project.title || '';
             document.getElementById('project-year').value = project.year || '';
@@ -755,19 +940,25 @@
                 role: '',
                 year: new Date().getFullYear().toString(),
                 description: '',
+                icon: 'preview-icon',
                 media: { type: 'none', url: '', file: '' },
                 credits: [],
                 visible: true
             };
             content.projects.push(newProject);
             selectProject(content.projects.length - 1);
-            showToast('New project added!');
+            showToast('New project added! It will appear as a new desktop icon.');
         }
 
         function saveCurrentProject() {
             if (currentProjectIndex < 0) return;
 
             const project = content.projects[currentProjectIndex];
+
+            // Icon
+            const customIconUrl = document.getElementById('project-icon-url').value;
+            project.icon = customIconUrl || document.getElementById('project-icon-select').value;
+
             project.title = document.getElementById('project-title').value;
             project.year = document.getElementById('project-year').value;
             project.client = document.getElementById('project-client').value;
@@ -788,7 +979,7 @@
 
             renderProjectList();
             saveToLocalStorage();
-            showToast('Project saved!');
+            showToast('Project saved! Desktop icon updated.');
         }
 
         function deleteCurrentProject() {
@@ -964,6 +1155,69 @@
             a.click();
             URL.revokeObjectURL(url);
             showToast('Downloaded! Replace content.json in your repo.');
+        }
+
+        // Icon Preview
+        function updateIconPreview() {
+            const customUrl = document.getElementById('project-icon-url').value;
+            const selectValue = document.getElementById('project-icon-select').value;
+            const iconUrl = customUrl || getIconUrl(selectValue);
+            document.getElementById('icon-preview-img').src = iconUrl;
+        }
+
+        // Appearance
+        function renderAppearance() {
+            if (!content.appearance) {
+                content.appearance = { backgroundUrl: 'https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png' };
+            }
+            const bgUrl = content.appearance.backgroundUrl || '';
+            document.getElementById('bg-custom-url').value = bgUrl.startsWith('http') ? bgUrl : '';
+            updateBgPreview();
+
+            // Mark active preset
+            document.querySelectorAll('.bg-preset').forEach(preset => {
+                preset.classList.toggle('active', preset.dataset.url === bgUrl);
+            });
+        }
+
+        function selectBgPreset(element) {
+            const url = element.dataset.url;
+            document.querySelectorAll('.bg-preset').forEach(p => p.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('bg-custom-url').value = '';
+            content.appearance.backgroundUrl = url;
+            updateBgPreview();
+        }
+
+        function updateBgPreview() {
+            const customUrl = document.getElementById('bg-custom-url').value;
+            const bgUrl = customUrl || content.appearance?.backgroundUrl || '';
+            const preview = document.getElementById('bg-preview-img');
+
+            if (bgUrl.startsWith('http')) {
+                preview.src = bgUrl;
+                preview.style.display = 'block';
+            } else if (bgUrl === 'leopard-aurora') {
+                preview.style.display = 'none';
+                document.getElementById('background-preview').style.background = 'linear-gradient(180deg, #2b1055 0%, #7b4397 50%, #dc2430 100%)';
+            } else if (bgUrl === 'tiger') {
+                preview.style.display = 'none';
+                document.getElementById('background-preview').style.background = 'linear-gradient(180deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%)';
+            }
+
+            if (customUrl) {
+                document.querySelectorAll('.bg-preset').forEach(p => p.classList.remove('active'));
+                content.appearance.backgroundUrl = customUrl;
+            }
+        }
+
+        function saveAppearance() {
+            const customUrl = document.getElementById('bg-custom-url').value;
+            if (customUrl) {
+                content.appearance.backgroundUrl = customUrl;
+            }
+            saveToLocalStorage();
+            showToast('Background saved! Download JSON to apply changes.');
         }
 
         // Toast
