@@ -820,7 +820,7 @@
             const preview = document.getElementById('video-preview');
 
             const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
-            const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+            const vimeoMatch = url.match(/(?:vimeo\.com\/(?:.*\/)?|player\.vimeo\.com\/video\/)(\d+)/);
 
             if (youtubeMatch) {
                 preview.innerHTML = `<iframe src="https://www.youtube.com/embed/${youtubeMatch[1]}" frameborder="0" allowfullscreen></iframe>`;

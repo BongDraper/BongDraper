@@ -103,7 +103,7 @@ function getVideoEmbed(url) {
     }
 
     // Vimeo
-    const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+    const vimeoMatch = url.match(/(?:vimeo\.com\/(?:.*\/)?|player\.vimeo\.com\/video\/)(\d+)/);
     if (vimeoMatch) {
         return `<iframe src="https://player.vimeo.com/video/${vimeoMatch[1]}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
     }
