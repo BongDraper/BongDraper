@@ -100,14 +100,14 @@ class VistaDesktop {
             return;
         }
 
-        // Map project IDs to icons8 icon URLs (reliable CDN)
+        // Map project IDs to icons8 icon URLs (diverse Mac-style icons)
         const iconMap = {
-            'tmobile': 'https://img.icons8.com/color/96/mac-folder.png',
-            'samsung': 'https://img.icons8.com/color/96/mac-folder.png',
-            'shibuya': 'https://img.icons8.com/color/96/mac-folder.png',
-            'heineken': 'https://img.icons8.com/color/96/mac-folder.png',
-            'audi': 'https://img.icons8.com/color/96/mac-folder.png',
-            'kfc': 'https://img.icons8.com/color/96/mac-folder.png',
+            'tmobile': 'https://img.icons8.com/color/96/opened-folder.png',
+            'samsung': 'https://img.icons8.com/color/96/documents-folder.png',
+            'shibuya': 'https://img.icons8.com/color/96/globe--v1.png',
+            'heineken': 'https://img.icons8.com/color/96/pictures-folder.png',
+            'audi': 'https://img.icons8.com/color/96/application-window.png',
+            'kfc': 'https://img.icons8.com/color/96/movie-projector.png',
             'about': 'https://img.icons8.com/color/96/contacts.png',
             'contact': 'https://img.icons8.com/color/96/apple-mail.png',
             'music': 'https://img.icons8.com/color/96/itunes.png'
