@@ -295,9 +295,10 @@ function renderDesktopIcons() {
 
         // Use icon from project data
         if (project.icon) {
-            if (project.icon.type === 'url' && project.icon.url) {
+            // Prioritize URL (includes data URLs from file uploads)
+            if (project.icon.url) {
                 img.src = project.icon.url;
-            } else if (project.icon.type === 'file' && project.icon.file) {
+            } else if (project.icon.file) {
                 img.src = `icons/${project.icon.file}`;
             } else {
                 // Fallback to default icon

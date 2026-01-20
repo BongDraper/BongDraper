@@ -516,8 +516,8 @@
                                 </div>
                                 <div class="media-option" data-type="file" onclick="selectIconType('file')">
                                     <div class="icon">📁</div>
-                                    <div class="label">Upload File</div>
-                                    <div class="desc">SVG or PNG</div>
+                                    <div class="label">Upload from Computer</div>
+                                    <div class="desc">Browse local files</div>
                                 </div>
                             </div>
 
@@ -527,9 +527,12 @@
                             </div>
 
                             <div id="icon-file-input" style="display: none;">
-                                <input type="file" id="project-icon-file" accept="image/*">
-                                <p class="help-text">Upload to the /icons folder and enter the filename</p>
-                                <input type="text" id="project-icon-filename" placeholder="e.g., myproject.svg" style="margin-top: 8px;">
+                                <input type="file" id="project-icon-file" accept="image/*" onchange="handleIconFileUpload(event)">
+                                <p class="help-text">Select an icon from your computer (SVG, PNG, or JPG)</p>
+                            </div>
+
+                            <div class="preview-thumb" id="icon-preview" style="margin-top: 12px; display: none;">
+                                Icon preview will appear here
                             </div>
                         </div>
 
@@ -760,11 +763,25 @@
             // Icon
             currentIconType = project.icon?.type || 'file';
             selectIconType(currentIconType);
+
+            // Clear icon inputs
+            document.getElementById('project-icon-url').value = '';
+            const iconFileInput = document.getElementById('project-icon-file');
+            if (iconFileInput) iconFileInput.value = '';
+
+            const preview = document.getElementById('icon-preview');
+
             if (project.icon?.url) {
                 document.getElementById('project-icon-url').value = project.icon.url;
-            }
-            if (project.icon?.file) {
-                document.getElementById('project-icon-filename').value = project.icon.file;
+                preview.style.display = 'block';
+                preview.innerHTML = `<img src="${project.icon.url}" alt="Icon preview" style="max-width: 64px; max-height: 64px; background: #f0f0f0; padding: 8px; border-radius: 4px;" onerror="this.parentElement.style.display='none'">`;
+            } else if (project.icon?.file) {
+                const iconPath = `icons/${project.icon.file}`;
+                preview.style.display = 'block';
+                preview.innerHTML = `<img src="${iconPath}" alt="Icon preview" style="max-width: 64px; max-height: 64px; background: #f0f0f0; padding: 8px; border-radius: 4px;" onerror="this.parentElement.style.display='none'">`;
+            } else {
+                preview.style.display = 'none';
+                preview.innerHTML = 'Icon preview will appear here';
             }
 
             // Media
@@ -816,10 +833,11 @@
             project.visible = document.getElementById('project-visible').checked;
 
             // Icon
+            const iconUrl = document.getElementById('project-icon-url').value;
             project.icon = {
-                type: currentIconType,
-                url: document.getElementById('project-icon-url').value,
-                file: document.getElementById('project-icon-filename').value
+                type: iconUrl ? 'url' : 'file',
+                url: iconUrl,
+                file: project.icon?.file || ''  // Preserve existing file if no new URL
             };
 
             // Media
@@ -862,6 +880,54 @@
             document.getElementById('icon-url-input').style.display = type === 'url' ? 'block' : 'none';
             document.getElementById('icon-file-input').style.display = type === 'file' ? 'block' : 'none';
         }
+
+        function handleIconFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Check if file is an image
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file (SVG, PNG, JPG)');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const dataUrl = e.target.result;
+
+                // Store as URL type with data URL
+                currentIconType = 'url';
+                document.getElementById('project-icon-url').value = dataUrl;
+
+                // Show preview
+                const preview = document.getElementById('icon-preview');
+                preview.style.display = 'block';
+                preview.innerHTML = `<img src="${dataUrl}" alt="Icon preview" style="max-width: 64px; max-height: 64px; background: #f0f0f0; padding: 8px; border-radius: 4px;">`;
+
+                showToast('Icon uploaded successfully!');
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function updateIconPreview() {
+            const url = document.getElementById('project-icon-url').value;
+            const preview = document.getElementById('icon-preview');
+
+            if (url) {
+                preview.style.display = 'block';
+                preview.innerHTML = `<img src="${url}" alt="Icon preview" style="max-width: 64px; max-height: 64px; background: #f0f0f0; padding: 8px; border-radius: 4px;">`;
+            } else {
+                preview.style.display = 'none';
+                preview.innerHTML = 'Icon preview will appear here';
+            }
+        }
+
+        document.addEventListener('input', (e) => {
+            if (e.target.id === 'project-icon-url') {
+                updateIconPreview();
+            }
+        });
 
         // Media
         function selectMediaType(type) {
