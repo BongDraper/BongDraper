@@ -47,9 +47,13 @@ async function loadContent() {
             isMusic: true
         };
 
+        // Render desktop icons after loading content
+        renderDesktopIcons();
+
     } catch (e) {
         console.error('Could not load content.json, using defaults', e);
         loadDefaultContent();
+        renderDesktopIcons();
     }
 }
 
@@ -263,6 +267,91 @@ function getProjectContent(projectId) {
         return generateMusicContent();
     } else {
         return generateProjectContent(project);
+    }
+}
+
+// Render desktop icons dynamically
+function renderDesktopIcons() {
+    const container = document.getElementById('desktop-icons');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    // Render project icons
+    Object.keys(PROJECTS).forEach(projectId => {
+        const project = PROJECTS[projectId];
+
+        // Skip special items (they'll be added separately)
+        if (project.isAbout || project.isContact || project.isMusic) return;
+
+        const iconDiv = document.createElement('div');
+        iconDiv.className = 'desktop-icon';
+        iconDiv.setAttribute('data-project', projectId);
+
+        const iconImage = document.createElement('div');
+        iconImage.className = 'icon-image';
+
+        const img = document.createElement('img');
+
+        // Use icon from project data
+        if (project.icon) {
+            if (project.icon.type === 'url' && project.icon.url) {
+                img.src = project.icon.url;
+            } else if (project.icon.type === 'file' && project.icon.file) {
+                img.src = `icons/${project.icon.file}`;
+            } else {
+                // Fallback to default icon
+                img.src = 'icons/default.svg';
+            }
+        } else {
+            // Fallback if no icon property exists
+            img.src = `icons/${projectId}.svg`;
+        }
+
+        img.alt = project.title;
+        iconImage.appendChild(img);
+
+        const label = document.createElement('span');
+        label.className = 'icon-label';
+        label.textContent = project.title;
+
+        iconDiv.appendChild(iconImage);
+        iconDiv.appendChild(label);
+        container.appendChild(iconDiv);
+    });
+
+    // Add special icons (About, Contact, Music)
+    const specialIcons = [
+        { id: 'about', title: 'About Me', icon: 'about.svg' },
+        { id: 'contact', title: 'Contact', icon: 'contact.svg' },
+        { id: 'music', title: 'Music Player', icon: 'music.svg' }
+    ];
+
+    specialIcons.forEach(special => {
+        const iconDiv = document.createElement('div');
+        iconDiv.className = 'desktop-icon';
+        iconDiv.setAttribute('data-project', special.id);
+
+        const iconImage = document.createElement('div');
+        iconImage.className = 'icon-image';
+
+        const img = document.createElement('img');
+        img.src = `icons/${special.icon}`;
+        img.alt = special.title;
+        iconImage.appendChild(img);
+
+        const label = document.createElement('span');
+        label.className = 'icon-label';
+        label.textContent = special.title;
+
+        iconDiv.appendChild(iconImage);
+        iconDiv.appendChild(label);
+        container.appendChild(iconDiv);
+    });
+
+    // Reinitialize desktop icon event handlers if VistaDesktop is available
+    if (window.vistaDesktop && typeof window.vistaDesktop.setupDesktopIcons === 'function') {
+        window.vistaDesktop.setupDesktopIcons();
     }
 }
 

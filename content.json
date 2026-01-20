@@ -27,6 +27,11 @@
       "role": "Associate Creative Director",
       "year": "2024",
       "description": "A feature spot running throughout Copa America 2024, celebrating the passion and rituals that unite soccer fans. The campaign captured authentic gameday moments—the superstitions, the lucky jerseys, the traditions passed down through generations.\n\nThis was a collaboration with Samsung for the launch of the Galaxy S24 and S24+, seamlessly integrating mobile technology into the fan experience.",
+      "icon": {
+        "type": "file",
+        "url": "",
+        "file": "tmobile.svg"
+      },
       "media": {
         "type": "none",
         "url": "",
@@ -47,6 +52,11 @@
       "role": "Associate Creative Director",
       "year": "2024",
       "description": "Launch campaign for the Samsung Galaxy S24 and S24+, integrated with T-Mobile's Copa America sponsorship. The work showcased how the new Galaxy devices enhance the way fans capture and share the beautiful game.",
+      "icon": {
+        "type": "file",
+        "url": "",
+        "file": "samsung.svg"
+      },
       "media": {
         "type": "none",
         "url": "",
@@ -67,6 +77,11 @@
       "role": "Associate Copywriter",
       "year": "2021",
       "description": "When Shibuya Ward—home to Japan's largest Halloween celebrations—asked people not to gather as a COVID preventative measure, we didn't cancel the party. We moved it online.\n\nTeaming up with au by KDDI, we recreated Shibuya block by block as a virtual twin. Over 400,000 participants joined the digital Halloween celebration, generating over $20 million in media exposure.\n\nThe project proved that community gatherings could transcend physical limitations, creating a new paradigm for public events.",
+      "icon": {
+        "type": "file",
+        "url": "",
+        "file": "shibuya.svg"
+      },
       "media": {
         "type": "none",
         "url": "",
@@ -87,6 +102,11 @@
       "role": "Copywriter",
       "year": "2022-2024",
       "description": "Brand storytelling and campaign work for Heineken, crafting narratives that connect with diverse audiences across markets.",
+      "icon": {
+        "type": "file",
+        "url": "",
+        "file": "heineken.svg"
+      },
       "media": {
         "type": "none",
         "url": "",
@@ -107,6 +127,11 @@
       "role": "Copywriter",
       "year": "2022-2024",
       "description": "Automotive brand work for Audi, developing copy that captures the precision engineering and forward-thinking design philosophy of the brand.",
+      "icon": {
+        "type": "file",
+        "url": "",
+        "file": "audi.svg"
+      },
       "media": {
         "type": "none",
         "url": "",
@@ -127,6 +152,11 @@
       "role": "Copywriter",
       "year": "2022-2024",
       "description": "Campaign work for KFC, bringing the Colonel's legacy to new audiences with fresh creative approaches while honoring the brand's heritage.",
+      "icon": {
+        "type": "file",
+        "url": "",
+        "file": "kfc.svg"
+      },
       "media": {
         "type": "none",
         "url": "",

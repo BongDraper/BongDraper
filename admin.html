@@ -507,6 +507,33 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Desktop Icon</label>
+                            <div class="media-options">
+                                <div class="media-option" data-type="url" onclick="selectIconType('url')">
+                                    <div class="icon">🔗</div>
+                                    <div class="label">Icon URL</div>
+                                    <div class="desc">Paste image URL</div>
+                                </div>
+                                <div class="media-option" data-type="file" onclick="selectIconType('file')">
+                                    <div class="icon">📁</div>
+                                    <div class="label">Upload File</div>
+                                    <div class="desc">SVG or PNG</div>
+                                </div>
+                            </div>
+
+                            <div id="icon-url-input" style="display: none;">
+                                <input type="text" id="project-icon-url" placeholder="Paste icon image URL">
+                                <p class="help-text">Direct link to SVG, PNG, or JPG image</p>
+                            </div>
+
+                            <div id="icon-file-input" style="display: none;">
+                                <input type="file" id="project-icon-file" accept="image/*">
+                                <p class="help-text">Upload to the /icons folder and enter the filename</p>
+                                <input type="text" id="project-icon-filename" placeholder="e.g., myproject.svg" style="margin-top: 8px;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label>Project Media</label>
                             <div class="media-options">
                                 <div class="media-option" data-type="none" onclick="selectMediaType('none')">
@@ -647,6 +674,7 @@
         let content = null;
         let currentProjectIndex = -1;
         let currentMediaType = 'none';
+        let currentIconType = 'file';
 
         // Initialize
         async function init() {
@@ -729,6 +757,16 @@
             document.getElementById('project-description').value = project.description || '';
             document.getElementById('project-visible').checked = project.visible !== false;
 
+            // Icon
+            currentIconType = project.icon?.type || 'file';
+            selectIconType(currentIconType);
+            if (project.icon?.url) {
+                document.getElementById('project-icon-url').value = project.icon.url;
+            }
+            if (project.icon?.file) {
+                document.getElementById('project-icon-filename').value = project.icon.file;
+            }
+
             // Media
             currentMediaType = project.media?.type || 'none';
             selectMediaType(currentMediaType);
@@ -755,6 +793,7 @@
                 role: '',
                 year: new Date().getFullYear().toString(),
                 description: '',
+                icon: { type: 'file', url: '', file: '' },
                 media: { type: 'none', url: '', file: '' },
                 credits: [],
                 visible: true
@@ -775,6 +814,13 @@
             project.role = document.getElementById('project-role').value;
             project.description = document.getElementById('project-description').value;
             project.visible = document.getElementById('project-visible').checked;
+
+            // Icon
+            project.icon = {
+                type: currentIconType,
+                url: document.getElementById('project-icon-url').value,
+                file: document.getElementById('project-icon-filename').value
+            };
 
             // Media
             project.media = {
@@ -802,6 +848,19 @@
             renderProjectList();
             saveToLocalStorage();
             showToast('Project deleted');
+        }
+
+        // Icon
+        function selectIconType(type) {
+            currentIconType = type;
+            document.querySelectorAll('.media-option').forEach(opt => {
+                if (opt.getAttribute('onclick')?.includes('selectIconType')) {
+                    opt.classList.toggle('active', opt.dataset.type === type);
+                }
+            });
+
+            document.getElementById('icon-url-input').style.display = type === 'url' ? 'block' : 'none';
+            document.getElementById('icon-file-input').style.display = type === 'file' ? 'block' : 'none';
         }
 
         // Media
