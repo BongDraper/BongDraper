@@ -100,17 +100,17 @@ class VistaDesktop {
             return;
         }
 
-        // Map project IDs to real Mac OS X Yosemite icons
+        // Map project IDs to real Mac OS X Yosemite icons (using ones that work)
         const iconMap = {
             'tmobile': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/preview-icon.png',
             'samsung': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/textedit-icon.png',
             'shibuya': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/maps-icon.png',
-            'heineken': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/photos-icon.png',
-            'audi': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/garageband-icon.png',
-            'kfc': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/imovie-icon.png',
+            'heineken': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/notes-icon.png',
+            'audi': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/reminders-icon.png',
+            'kfc': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/calendar-icon.png',
             'about': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/contacts-icon.png',
             'contact': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/mail-icon.png',
-            'music': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/itunes-icon.png'
+            'music': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/facetime-icon.png'
         };
 
         const iconUrl = iconMap[projectId] || 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/finder-icon.png';
