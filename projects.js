@@ -47,10 +47,106 @@ async function loadContent() {
             isMusic: true
         };
 
+        // Generate desktop icons after loading
+        generateDesktopIcons();
+
     } catch (e) {
         console.error('Could not load content.json, using defaults', e);
         loadDefaultContent();
     }
+}
+
+// Icon emoji mapping for preset icons
+const ICON_EMOJI_MAP = {
+    folder: '📁', document: '📄', image: '🖼️', video: '🎬', music: '🎵',
+    code: '💻', web: '🌐', mail: '📧', calendar: '📅', calculator: '🔢',
+    camera: '📷', phone: '📱', settings: '⚙️', search: '🔍', star: '⭐',
+    heart: '❤️', chart: '📊', book: '📚', pencil: '✏️', paint: '🎨',
+    game: '🎮', trophy: '🏆', globe: '🌍', rocket: '🚀', lightbulb: '💡',
+    key: '🔑', shield: '🛡️', download: '⬇️', upload: '⬆️', cloud: '☁️',
+    database: '🗄️', terminal: '⌨️', bug: '🐛', gift: '🎁', cart: '🛒',
+    creditcard: '💳', wallet: '👛', briefcase: '💼', clipboard: '📋', newspaper: '📰',
+    bookmark: '🔖', tag: '🏷️', bell: '🔔', flag: '🚩', pin: '📌',
+    paperclip: '📎', lock: '🔒', unlock: '🔓', link: '🔗', magnify: '🔎',
+    wrench: '🔧', hammer: '🔨', power: '⚡', fire: '🔥', sun: '☀️',
+    moon: '🌙', weather: '🌤️', umbrella: '☂️', snowflake: '❄️', tree: '🌲',
+    flower: '🌸', pizza: '🍕', coffee: '☕', beer: '🍺', wine: '🍷',
+    cocktail: '🍹', car: '🚗', plane: '✈️', train: '🚂', bicycle: '🚴',
+    house: '🏠', building: '🏢', bank: '🏦', hospital: '🏥', school: '🏫',
+    graduation: '🎓', sports: '⚽', basketball: '🏀', football: '🏈', baseball: '⚾',
+    tennis: '🎾', fitness: '💪', target: '🎯', checkmark: '✅', x: '❌',
+    warning: '⚠️', info: 'ℹ️', question: '❓', plus: '➕', minus: '➖'
+};
+
+// Generate desktop icons from loaded projects
+function generateDesktopIcons() {
+    const container = document.getElementById('desktop-icons');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    // Add regular projects first
+    Object.keys(PROJECTS).forEach(projectId => {
+        const project = PROJECTS[projectId];
+
+        // Skip special projects (they'll be added at the end)
+        if (project.isAbout || project.isContact || project.isMusic) return;
+
+        const iconElement = createDesktopIcon(projectId, project);
+        container.appendChild(iconElement);
+    });
+
+    // Add special projects at the end
+    if (PROJECTS.about) {
+        container.appendChild(createDesktopIcon('about', PROJECTS.about));
+    }
+    if (PROJECTS.contact) {
+        container.appendChild(createDesktopIcon('contact', PROJECTS.contact));
+    }
+    if (PROJECTS.music) {
+        container.appendChild(createDesktopIcon('music', PROJECTS.music));
+    }
+}
+
+// Create a desktop icon element
+function createDesktopIcon(projectId, project) {
+    const iconDiv = document.createElement('div');
+    iconDiv.className = 'desktop-icon';
+    iconDiv.dataset.project = projectId;
+
+    const iconImage = document.createElement('div');
+    iconImage.className = 'icon-image';
+
+    // Determine icon source
+    let iconHtml = '';
+
+    // Special projects always use their SVG files
+    if (projectId === 'about' || projectId === 'contact' || projectId === 'music') {
+        iconHtml = `<img src="icons/${projectId}.svg" alt="${project.title}">`;
+    }
+    // Projects with custom icon images
+    else if (project.icon?.type === 'custom' && project.icon.customUrl) {
+        iconHtml = `<img src="icons/${project.icon.customUrl}" alt="${project.title}">`;
+    }
+    // Projects with preset emoji icons
+    else if (project.icon?.type === 'preset' && project.icon.preset) {
+        const emoji = ICON_EMOJI_MAP[project.icon.preset] || '📁';
+        iconHtml = `<div style="font-size: 48px; line-height: 48px;">${emoji}</div>`;
+    }
+    // Fallback to folder icon
+    else {
+        iconHtml = `<div style="font-size: 48px; line-height: 48px;">📁</div>`;
+    }
+
+    iconImage.innerHTML = iconHtml;
+    iconDiv.appendChild(iconImage);
+
+    const label = document.createElement('span');
+    label.className = 'icon-label';
+    label.textContent = project.title;
+    iconDiv.appendChild(label);
+
+    return iconDiv;
 }
 
 // Fallback default content

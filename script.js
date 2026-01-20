@@ -506,6 +506,8 @@ class VistaDesktop {
 }
 
 // Initialize on DOM load
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load content first, then initialize desktop
+    await loadContent();
     window.vistaDesktop = new VistaDesktop();
 });

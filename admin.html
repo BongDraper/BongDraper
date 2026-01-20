@@ -507,6 +507,130 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Desktop Icon</label>
+                            <div class="media-options">
+                                <div class="media-option" data-type="preset" onclick="selectIconType('preset')">
+                                    <div class="icon">📁</div>
+                                    <div class="label">Preset Icon</div>
+                                    <div class="desc">Choose from library</div>
+                                </div>
+                                <div class="media-option" data-type="custom" onclick="selectIconType('custom')">
+                                    <div class="icon">🖼️</div>
+                                    <div class="label">Custom Image</div>
+                                    <div class="desc">Upload JPG/PNG</div>
+                                </div>
+                            </div>
+
+                            <div id="icon-preset-input" style="display: none; margin-top: 12px;">
+                                <select id="project-icon-preset" onchange="updateIconPreview()">
+                                    <option value="folder">📁 Folder</option>
+                                    <option value="document">📄 Document</option>
+                                    <option value="image">🖼️ Image</option>
+                                    <option value="video">🎬 Video</option>
+                                    <option value="music">🎵 Music</option>
+                                    <option value="code">💻 Code</option>
+                                    <option value="web">🌐 Web</option>
+                                    <option value="mail">📧 Mail</option>
+                                    <option value="calendar">📅 Calendar</option>
+                                    <option value="calculator">🔢 Calculator</option>
+                                    <option value="camera">📷 Camera</option>
+                                    <option value="phone">📱 Phone</option>
+                                    <option value="settings">⚙️ Settings</option>
+                                    <option value="search">🔍 Search</option>
+                                    <option value="star">⭐ Star</option>
+                                    <option value="heart">❤️ Heart</option>
+                                    <option value="chart">📊 Chart</option>
+                                    <option value="book">📚 Book</option>
+                                    <option value="pencil">✏️ Pencil</option>
+                                    <option value="paint">🎨 Paint</option>
+                                    <option value="game">🎮 Game</option>
+                                    <option value="trophy">🏆 Trophy</option>
+                                    <option value="globe">🌍 Globe</option>
+                                    <option value="rocket">🚀 Rocket</option>
+                                    <option value="lightbulb">💡 Lightbulb</option>
+                                    <option value="key">🔑 Key</option>
+                                    <option value="shield">🛡️ Shield</option>
+                                    <option value="download">⬇️ Download</option>
+                                    <option value="upload">⬆️ Upload</option>
+                                    <option value="cloud">☁️ Cloud</option>
+                                    <option value="database">🗄️ Database</option>
+                                    <option value="terminal">⌨️ Terminal</option>
+                                    <option value="bug">🐛 Bug</option>
+                                    <option value="gift">🎁 Gift</option>
+                                    <option value="cart">🛒 Cart</option>
+                                    <option value="creditcard">💳 Credit Card</option>
+                                    <option value="wallet">👛 Wallet</option>
+                                    <option value="briefcase">💼 Briefcase</option>
+                                    <option value="clipboard">📋 Clipboard</option>
+                                    <option value="newspaper">📰 Newspaper</option>
+                                    <option value="bookmark">🔖 Bookmark</option>
+                                    <option value="tag">🏷️ Tag</option>
+                                    <option value="bell">🔔 Bell</option>
+                                    <option value="flag">🚩 Flag</option>
+                                    <option value="pin">📌 Pin</option>
+                                    <option value="paperclip">📎 Paperclip</option>
+                                    <option value="lock">🔒 Lock</option>
+                                    <option value="unlock">🔓 Unlock</option>
+                                    <option value="link">🔗 Link</option>
+                                    <option value="magnify">🔎 Magnifying Glass</option>
+                                    <option value="wrench">🔧 Wrench</option>
+                                    <option value="hammer">🔨 Hammer</option>
+                                    <option value="power">⚡ Power</option>
+                                    <option value="fire">🔥 Fire</option>
+                                    <option value="sun">☀️ Sun</option>
+                                    <option value="moon">🌙 Moon</option>
+                                    <option value="weather">🌤️ Weather</option>
+                                    <option value="umbrella">☂️ Umbrella</option>
+                                    <option value="snowflake">❄️ Snowflake</option>
+                                    <option value="tree">🌲 Tree</option>
+                                    <option value="flower">🌸 Flower</option>
+                                    <option value="pizza">🍕 Pizza</option>
+                                    <option value="coffee">☕ Coffee</option>
+                                    <option value="beer">🍺 Beer</option>
+                                    <option value="wine">🍷 Wine</option>
+                                    <option value="cocktail">🍹 Cocktail</option>
+                                    <option value="car">🚗 Car</option>
+                                    <option value="plane">✈️ Plane</option>
+                                    <option value="train">🚂 Train</option>
+                                    <option value="bicycle">🚴 Bicycle</option>
+                                    <option value="house">🏠 House</option>
+                                    <option value="building">🏢 Building</option>
+                                    <option value="bank">🏦 Bank</option>
+                                    <option value="hospital">🏥 Hospital</option>
+                                    <option value="school">🏫 School</option>
+                                    <option value="graduation">🎓 Graduation</option>
+                                    <option value="sports">⚽ Sports</option>
+                                    <option value="basketball">🏀 Basketball</option>
+                                    <option value="football">🏈 Football</option>
+                                    <option value="baseball">⚾ Baseball</option>
+                                    <option value="tennis">🎾 Tennis</option>
+                                    <option value="fitness">💪 Fitness</option>
+                                    <option value="target">🎯 Target</option>
+                                    <option value="checkmark">✅ Checkmark</option>
+                                    <option value="x">❌ X</option>
+                                    <option value="warning">⚠️ Warning</option>
+                                    <option value="info">ℹ️ Info</option>
+                                    <option value="question">❓ Question</option>
+                                    <option value="plus">➕ Plus</option>
+                                    <option value="minus">➖ Minus</option>
+                                </select>
+                                <p class="help-text">Select an icon from the library</p>
+                                <div class="preview-thumb" id="icon-preset-preview" style="margin-top: 8px; font-size: 48px; text-align: center;">
+                                    📁
+                                </div>
+                            </div>
+
+                            <div id="icon-custom-input" style="display: none; margin-top: 12px;">
+                                <input type="file" id="project-icon-file" accept="image/png,image/jpeg,image/jpg" onchange="handleIconUpload()">
+                                <p class="help-text">Upload to the /icons folder and enter the filename (JPG or PNG)</p>
+                                <input type="text" id="project-icon-filename" placeholder="e.g., my-icon.png" style="margin-top: 8px;">
+                                <div class="preview-thumb" id="icon-custom-preview" style="margin-top: 8px;">
+                                    Custom icon preview will appear here
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label>Project Media</label>
                             <div class="media-options">
                                 <div class="media-option" data-type="none" onclick="selectMediaType('none')">
@@ -729,6 +853,17 @@
             document.getElementById('project-description').value = project.description || '';
             document.getElementById('project-visible').checked = project.visible !== false;
 
+            // Icon
+            currentIconType = project.icon?.type || 'preset';
+            selectIconType(currentIconType);
+            if (project.icon?.preset) {
+                document.getElementById('project-icon-preset').value = project.icon.preset;
+                updateIconPreview();
+            }
+            if (project.icon?.customUrl) {
+                document.getElementById('project-icon-filename').value = project.icon.customUrl;
+            }
+
             // Media
             currentMediaType = project.media?.type || 'none';
             selectMediaType(currentMediaType);
@@ -755,6 +890,7 @@
                 role: '',
                 year: new Date().getFullYear().toString(),
                 description: '',
+                icon: { type: 'preset', preset: 'folder', customUrl: '' },
                 media: { type: 'none', url: '', file: '' },
                 credits: [],
                 visible: true
@@ -775,6 +911,13 @@
             project.role = document.getElementById('project-role').value;
             project.description = document.getElementById('project-description').value;
             project.visible = document.getElementById('project-visible').checked;
+
+            // Icon
+            project.icon = {
+                type: currentIconType,
+                preset: document.getElementById('project-icon-preset').value,
+                customUrl: document.getElementById('project-icon-filename').value
+            };
 
             // Media
             project.media = {
@@ -836,6 +979,45 @@
                 updateVideoPreview();
             }
         });
+
+        // Icon Management
+        let currentIconType = 'preset';
+
+        function selectIconType(type) {
+            currentIconType = type;
+            const options = document.querySelectorAll('.media-options')[0].parentElement.querySelectorAll('.media-option');
+            options.forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.type === type);
+            });
+
+            document.getElementById('icon-preset-input').style.display = type === 'preset' ? 'block' : 'none';
+            document.getElementById('icon-custom-input').style.display = type === 'custom' ? 'block' : 'none';
+        }
+
+        function updateIconPreview() {
+            const preset = document.getElementById('project-icon-preset').value;
+            const preview = document.getElementById('icon-preset-preview');
+            const selectedOption = document.querySelector(`#project-icon-preset option[value="${preset}"]`);
+            if (selectedOption) {
+                preview.textContent = selectedOption.textContent.split(' ')[0];
+            }
+        }
+
+        function handleIconUpload() {
+            const file = document.getElementById('project-icon-file').files[0];
+            const preview = document.getElementById('icon-custom-preview');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" style="max-width: 100%; max-height: 100px;">`;
+                };
+                reader.readAsDataURL(file);
+
+                // Suggest filename
+                document.getElementById('project-icon-filename').value = file.name;
+            }
+        }
 
         // Credits
         function renderCredits(credits) {
