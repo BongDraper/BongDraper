@@ -100,20 +100,20 @@ class VistaDesktop {
             return;
         }
 
-        // Map project IDs to Mac OS X Yosemite style icon URLs (working hotlinks)
+        // Map project IDs to icons8 icon URLs (reliable CDN)
         const iconMap = {
-            'tmobile': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/folder-icon.png',
-            'samsung': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/documents-icon.png',
-            'shibuya': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/network-icon.png',
-            'heineken': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/downloads-icon.png',
-            'audi': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/applications-icon.png',
-            'kfc': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/movies-icon.png',
-            'about': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/contacts-icon.png',
-            'contact': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/mail-icon.png',
-            'music': 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/itunes-icon.png'
+            'tmobile': 'https://img.icons8.com/color/96/mac-folder.png',
+            'samsung': 'https://img.icons8.com/color/96/mac-folder.png',
+            'shibuya': 'https://img.icons8.com/color/96/mac-folder.png',
+            'heineken': 'https://img.icons8.com/color/96/mac-folder.png',
+            'audi': 'https://img.icons8.com/color/96/mac-folder.png',
+            'kfc': 'https://img.icons8.com/color/96/mac-folder.png',
+            'about': 'https://img.icons8.com/color/96/contacts.png',
+            'contact': 'https://img.icons8.com/color/96/apple-mail.png',
+            'music': 'https://img.icons8.com/color/96/itunes.png'
         };
 
-        const iconUrl = iconMap[projectId] || 'https://icons.iconarchive.com/icons/johanchalibert/mac-osx-yosemite/256/folder-icon.png';
+        const iconUrl = iconMap[projectId] || 'https://img.icons8.com/color/96/mac-folder.png';
 
         const item = document.createElement('div');
         item.className = 'dock-item active';
