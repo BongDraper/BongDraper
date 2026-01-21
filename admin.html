@@ -539,6 +539,9 @@
         <header>
             <h1>Portfolio Editor <span>— Edit your content</span></h1>
             <div class="header-actions">
+                <button class="btn btn-secondary" onclick="resetToDefault()">
+                    <span>🔄</span> Reset to Default
+                </button>
                 <button class="btn btn-secondary" onclick="downloadContent()">
                     <span>⬇</span> Download JSON
                 </button>
@@ -1155,6 +1158,17 @@
             a.click();
             URL.revokeObjectURL(url);
             showToast('Downloaded! Replace content.json in your repo.');
+        }
+
+        function resetToDefault() {
+            if (!confirm('This will clear all local changes and reload from content.json. Are you sure?')) {
+                return;
+            }
+            localStorage.removeItem('portfolio-content');
+            showToast('Reset to default! Reloading...');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         }
 
         // Icon Preview
