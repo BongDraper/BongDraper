@@ -102,18 +102,18 @@ body {
     opacity: 0.8;
 }
 
-/* Desktop Icons - Mac style on right side */
+/* Desktop Icons - Mac style grid layout */
 .desktop-icons {
     position: absolute;
-    top: calc(var(--menubar-height) + 10px);
-    right: 10px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap-reverse;
-    align-content: flex-end;
-    gap: 4px;
-    max-height: calc(100vh - var(--menubar-height) - 100px);
+    top: calc(var(--menubar-height) + 20px);
+    left: 20px;
+    right: 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    grid-auto-rows: 100px;
+    gap: 20px;
     z-index: 1;
+    align-content: start;
 }
 
 .desktop-icon {
@@ -125,7 +125,8 @@ body {
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s ease;
-    width: 90px;
+    width: 100px;
+    height: 100px;
 }
 
 .desktop-icon:hover {
@@ -881,16 +882,20 @@ body {
     }
 
     .desktop-icons {
-        position: static;
+        position: absolute;
+        top: calc(var(--menubar-height) + 15px);
+        left: 15px;
+        right: 15px;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        padding: calc(var(--menubar-height) + 15px) 15px 100px;
-        max-height: none;
+        grid-template-columns: repeat(3, 90px);
+        grid-auto-rows: 90px;
+        gap: 15px;
+        align-content: start;
     }
 
     .desktop-icon {
-        width: auto;
+        width: 90px;
+        height: 90px;
     }
 
     .icon-image {
